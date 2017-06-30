@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b8498c67-83cd-46e1-b135-9c79f999ae01" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../modules" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../hubble/src/builder/builder.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../hubble/src/decorator.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../hubble/src/state.go" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../worker-channel-modules" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../worker-input-modules/http_modules/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../worker-input-modules/http_modules/configure/http.yaml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../worker-input-modules/http_modules/src/http_core_module.go" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../worker-input-modules/http_modules/src/http_location_module.go" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../worker-input-modules/http_modules/src/input_http_module.go" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../worker-input-modules/stdin_modules/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../worker-input-modules/stdin_modules/configure/stdin.yaml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../worker-input-modules/stdin_modules/src/input_stdin_module.go" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../worker-input-modules/stdin_modules/src/stdin_core_module.go" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../worker-output-modules" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../worker" afterPath="$PROJECT_DIR$/../worker" />
-    </list>
+    <list default="true" id="b8498c67-83cd-46e1-b135-9c79f999ae01" name="Default" comment="" />
     <ignored path="plugins.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -47,7 +29,7 @@
       <file leaf-file-name="plugin.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/plugin.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
+            <state relative-caret-position="147">
               <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
               <folding>
                 <element signature="e#17#75#0" expanded="true" />
@@ -142,9 +124,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
-    <option name="y" value="24" />
+    <option name="y" value="-4" />
     <option name="width" value="1301" />
-    <option name="height" value="744" />
+    <option name="height" value="772" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -173,7 +155,6 @@
     <panes>
       <pane id="PackagesPane" />
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -236,6 +217,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -623,19 +605,20 @@
       <option name="presentableId" value="Default" />
       <updated>1498632910476</updated>
       <workItem from="1498632911763" duration="3076000" />
-      <workItem from="1498647384718" duration="1201000" />
+      <workItem from="1498647384718" duration="1314000" />
+      <workItem from="1498735611502" duration="14000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4277000" />
+    <option name="totallyTimeSpent" value="4404000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1301" height="744" extended-state="6" />
+    <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24940239" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24940239" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287037" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -670,6 +653,60 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/plugin.go">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+          <folding>
+            <element signature="e#17#75#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codec/yaml.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../rookie-xy-old/plugins/codecs/yaml/src/yaml.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding>
+            <element signature="e#53#134#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/filter/grok.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/event/message.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configure/file.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+          <folding>
+            <element signature="e#19#77#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin.go">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
@@ -695,14 +732,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../worker/src/configure/configure.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../worker/src/configure/configure.go" />
     <entry file="file://$PROJECT_DIR$/configure/file.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -715,7 +745,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/plugin.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
+        <state relative-caret-position="147">
           <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
           <folding>
             <element signature="e#17#75#0" expanded="true" />
