@@ -3,7 +3,12 @@ package codec
 
 import (
     yml "gopkg.in/yaml.v2"
-    "github.com/rookie-xy-old/hubble/hubble/src/prototype"
+    "github.com/rookie-xy/worker/src/prototype"
+    "github.com/rookie-xy/worker/src/state"
+    "github.com/rookie-xy/worker/src/plugin"
+
+    "github.com/rookie-xy/worker/src/plugin/codec"
+    "fmt"
 )
 
 type Yaml struct {
@@ -17,17 +22,24 @@ func NewYaml() *Yaml {
 var yaml = &Yaml{
     name: "yaml",
 }
-
-func (r *Yaml) New() Codec {
+/*
+func (r *Yaml) New() plugin.Codec {
     yaml := NewYaml()
 
     yaml.name = "yaml"
 
     return yaml
 }
+*/
+
+func (r *Yaml) Clone() plugin.Codec {
+    yaml := NewYaml()
+    yaml.name = "yaml"
+    return yaml
+}
 
 func (r *Yaml) Init(configure prototype.Object) int {
-    return Ignore
+    return state.Ignore
 }
 
 func (r *Yaml) Encode(in prototype.Object) (prototype.Object, error) {
@@ -50,13 +62,16 @@ func (r *Yaml) Decode(in []byte) (prototype.Object, error) {
 }
 
 func (r *Yaml) Type(name string) int {
+    fmt.Println("mengshiiiiiiiiiiiiiiiiiiii", name)
     if r.name != name {
-        return Ignore
+        return state.Declined
     }
 
-    return Ok
+    fmt.Println("dddddddddddddddddddddddddddddd", name)
+
+    return state.Ok
 }
 
 func init() {
-    Codecs = append(Codecs, yaml)
+    codec.Plugins = append(codec.Plugins, yaml)
 }

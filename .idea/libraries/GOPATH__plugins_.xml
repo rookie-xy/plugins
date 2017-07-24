@@ -9,6 +9,9 @@
       <root url="file://$PROJECT_DIR$/../../../worker" />
       <root url="file://$PROJECT_DIR$/../.." />
       <root url="file://$PROJECT_DIR$/../../../code.google.com" />
+      <root url="file://$PROJECT_DIR$/../../../hawkeye-agent" />
+      <root url="file://$PROJECT_DIR$/../../../a" />
+      <root url="file://$PROJECT_DIR$/../../../potato" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
@@ -20,6 +23,9 @@
       <root url="file://$PROJECT_DIR$/../../../worker" />
       <root url="file://$PROJECT_DIR$/../.." />
       <root url="file://$PROJECT_DIR$/../../../code.google.com" />
+      <root url="file://$PROJECT_DIR$/../../../hawkeye-agent" />
+      <root url="file://$PROJECT_DIR$/../../../a" />
+      <root url="file://$PROJECT_DIR$/../../../potato" />
     </SOURCES>
     <excluded>
       <root url="file://$PROJECT_DIR$" />

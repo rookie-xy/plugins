@@ -1,14 +1,23 @@
 package plugins
 
 import (
-    "github.com/rookie-xy/worker/src/configure"
+    "fmt"
+    "github.com/rookie-xy/worker/src/state"
+    "github.com/rookie-xy/worker/src/plugin"
+
+    "github.com/rookie-xy/worker/src/plugin/codec"
 )
 
-func Configure(name string) configure.ConfigureMethod {
-
-    for _, plugin := range configure.Plugins {
-        plugin.GetFile()
+func Codec(name string) plugin.Codec {
+    fmt.Println("uuuuuuuuuuuuuuu", name)
+    for _, plugin := range codec.Plugins {
+        if plugin.Type(name) == state.Ok {
+            fmt.Println("hhhhhhhhhhhhhhhhh")
+            return plugin.Clone()
+        }
     }
+
+    fmt.Println("nnnnnnnnnnnnnnnnnnnnnnnnnnn")
 
     return nil
 }
