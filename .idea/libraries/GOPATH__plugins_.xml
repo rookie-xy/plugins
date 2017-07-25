@@ -11,6 +11,7 @@
       <root url="file://$PROJECT_DIR$/../../../code.google.com" />
       <root url="file://$PROJECT_DIR$/../../../hawkeye-agent" />
       <root url="file://$PROJECT_DIR$/../../../a" />
+      <root url="file://$PROJECT_DIR$/../../../gopkg.in" />
       <root url="file://$PROJECT_DIR$/../../../potato" />
     </CLASSES>
     <JAVADOC />
@@ -25,6 +26,7 @@
       <root url="file://$PROJECT_DIR$/../../../code.google.com" />
       <root url="file://$PROJECT_DIR$/../../../hawkeye-agent" />
       <root url="file://$PROJECT_DIR$/../../../a" />
+      <root url="file://$PROJECT_DIR$/../../../gopkg.in" />
       <root url="file://$PROJECT_DIR$/../../../potato" />
     </SOURCES>
     <excluded>

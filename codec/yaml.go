@@ -5,8 +5,7 @@ import (
     yml "gopkg.in/yaml.v2"
     "github.com/rookie-xy/worker/src/prototype"
     "github.com/rookie-xy/worker/src/state"
-    "github.com/rookie-xy/worker/src/plugin"
-
+    "github.com/rookie-xy/worker/src/register"
     "github.com/rookie-xy/worker/src/plugin/codec"
     "fmt"
 )
@@ -22,17 +21,8 @@ func NewYaml() *Yaml {
 var yaml = &Yaml{
     name: "yaml",
 }
-/*
-func (r *Yaml) New() plugin.Codec {
-    yaml := NewYaml()
 
-    yaml.name = "yaml"
-
-    return yaml
-}
-*/
-
-func (r *Yaml) Clone() plugin.Codec {
+func (r *Yaml) Clone() codec.Codec {
     yaml := NewYaml()
     yaml.name = "yaml"
     return yaml
@@ -73,5 +63,5 @@ func (r *Yaml) Type(name string) int {
 }
 
 func init() {
-    codec.Plugins = append(codec.Plugins, yaml)
+    register.Codecs("yml", yaml)
 }
