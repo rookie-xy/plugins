@@ -8,6 +8,7 @@ import (
     "github.com/rookie-xy/worker/src/register"
 
   _ "github.com/rookie-xy/plugins/codec/yaml"
+  _ "github.com/rookie-xy/plugins/codec/json"
 )
 
 type codecPlugin struct {
@@ -31,7 +32,7 @@ func init() {
         defer func() {
             if msg := recover(); msg != nil {
                 err = fmt.Errorf("%s", msg)
-	    }
+	           }
         }()
 
         register.Codec(b.name, b.factory)
