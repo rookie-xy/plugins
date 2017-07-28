@@ -2,7 +2,7 @@ package yaml
 
 import (
     yml "gopkg.in/yaml.v2"
-    "github.com/rookie-xy/worker/src/plugin/codec"
+    "github.com/rookie-xy/worker/src/codec"
     "github.com/rookie-xy/worker/src/prototype"
     "github.com/rookie-xy/worker/src/register"
 )

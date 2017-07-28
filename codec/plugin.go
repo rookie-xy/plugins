@@ -4,7 +4,7 @@ import (
     "fmt"
     "errors"
     "github.com/rookie-xy/worker/src/plugin"
-    "github.com/rookie-xy/worker/src/plugin/codec"
+    "github.com/rookie-xy/worker/src/codec"
     "github.com/rookie-xy/worker/src/register"
 
   _ "github.com/rookie-xy/plugins/codec/yaml"
