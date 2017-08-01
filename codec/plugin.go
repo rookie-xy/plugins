@@ -11,19 +11,19 @@ import (
   _ "github.com/rookie-xy/plugins/codec/json"
 )
 
+const Namespace = "plugin.codec"
+
 type codecPlugin struct {
     name    string
     factory codec.Factory
 }
-
-const Name = "codec"
 
 func Plugin(name string, f codec.Factory) map[string][]interface{} {
      return plugin.Make(name, codecPlugin{name, f})
 }
 
 func init() {
-    plugin.MustRegisterLoader(Name, func(ifc interface{}) (err error) {
+    plugin.MustRegisterLoader(Namespace, func(ifc interface{}) (err error) {
         b, ok := ifc.(codecPlugin)
         if !ok {
             return errors.New("plugin does not match output codec plugin type")

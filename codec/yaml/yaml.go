@@ -7,7 +7,7 @@ import (
     "github.com/rookie-xy/worker/src/register"
 )
 
-const Name = "yaml"
+const Namespace = "plugin.codec.yaml"
 
 type Yaml struct {
     name string
@@ -37,7 +37,7 @@ func (r *Yaml) Decode(in []byte) (prototype.Object, error) {
 }
 
 func init() {
-    register.Codec(Name, func(cfg *codec.Config) (codec.Codec, error) {
+    register.Codec(Namespace, func(cfg *codec.Config) (codec.Codec, error) {
         return New(), nil
     })
 }

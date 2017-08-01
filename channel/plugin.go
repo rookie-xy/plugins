@@ -8,23 +8,24 @@ import (
     "github.com/rookie-xy/worker/src/register"
     "github.com/rookie-xy/worker/src/channel"
 
-  _ "github.com/rookie-xy/plugins/codec/yaml"
-  _ "github.com/rookie-xy/plugins/codec/json"
+  _ "github.com/rookie-xy/plugins/channel/pipeline"
+  _ "github.com/rookie-xy/plugins/channel/queue"
+  _ "github.com/rookie-xy/plugins/channel/stream"
 )
 
+const Namespace = "plugin.channel"
+
 type channelPlugin struct {
-    name   string
-    method channel.Channel
+    name    string
+    factory channel.Factory
 }
 
-const Name = "channel"
-
-func Plugin(name string, m channel.Channel) map[string][]interface{} {
-     return plugin.Make(name, channelPlugin{name, m})
+func Plugin(name string, f channel.Factory) map[string][]interface{} {
+     return plugin.Make(name, channelPlugin{name, f})
 }
 
 func init() {
-    plugin.MustRegisterLoader(Name, func(ifc interface{}) (err error) {
+    plugin.MustRegisterLoader(Namespace, func(ifc interface{}) (err error) {
         b, ok := ifc.(channelPlugin)
         if !ok {
             return errors.New("plugin does not match output codec plugin type")
@@ -36,7 +37,7 @@ func init() {
 	           }
         }()
 
-        register.Channel(b.name, b.method)
+        register.Channel(b.name, b.factory)
 
         return
     })
