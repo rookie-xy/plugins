@@ -1,29 +1,31 @@
-package output
+package client
 
 import (
     "fmt"
     "errors"
+
     "github.com/rookie-xy/worker/src/plugin"
     "github.com/rookie-xy/worker/src/register"
     "github.com/rookie-xy/worker/src/output"
+    "github.com/rookie-xy/worker/src/client"
 
-  _ "github.com/rookie-xy/plugins/output/stdout"
+  _ "github.com/rookie-xy/plugins/client/stdout"
 )
 
-const Namespace = "plugin.output"
+const Namespace = "plugin.client"
 
-type outputPlugin struct {
+type clientPlugin struct {
     name    string
-    factory output.Factory
+    factory client.Factory
 }
 
 func Plugin(name string, f output.Factory) map[string][]interface{} {
-     return plugin.Make(name, outputPlugin{name, f})
+     return plugin.Make(name, clientPlugin{name, f})
 }
 
 func init() {
     plugin.MustRegisterLoader(Namespace, func(ifc interface{}) (err error) {
-        b, ok := ifc.(outputPlugin)
+        b, ok := ifc.(clientPlugin)
         if !ok {
             return errors.New("plugin does not match output codec plugin type")
         }
@@ -34,7 +36,7 @@ func init() {
 	           }
         }()
 
-        register.Output(b.name, b.factory)
+        register.Client(b.name, b.factory)
 
         return
     })
