@@ -4,16 +4,16 @@ import (
     "fmt"
     "errors"
 
-    "github.com/rookie-xy/worker/src/plugin"
-    "github.com/rookie-xy/worker/src/register"
-    "github.com/rookie-xy/worker/src/channel"
+    "github.com/rookie-xy/hubble/src/plugin"
+    "github.com/rookie-xy/hubble/src/register"
+    "github.com/rookie-xy/hubble/src/channel"
 
-  _ "github.com/rookie-xy/plugins/channel/pipeline"
-  _ "github.com/rookie-xy/plugins/channel/queue"
-  _ "github.com/rookie-xy/plugins/channel/stream"
+  _ "github.com/rookie-xy/plugins/pipeline/slot"
+  _ "github.com/rookie-xy/plugins/pipeline/queue"
+  _ "github.com/rookie-xy/plugins/pipeline/stream"
 )
 
-const Namespace = "plugin.channel"
+const Namespace = "plugin.pipeline"
 
 type channelPlugin struct {
     name    string

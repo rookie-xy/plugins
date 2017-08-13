@@ -3,9 +3,9 @@ package codec
 import (
     "fmt"
     "errors"
-    "github.com/rookie-xy/worker/src/plugin"
-    "github.com/rookie-xy/worker/src/codec"
-    "github.com/rookie-xy/worker/src/register"
+    "github.com/rookie-xy/hubble/src/plugin"
+    "github.com/rookie-xy/hubble/src/codec"
+    "github.com/rookie-xy/hubble/src/register"
 
   _ "github.com/rookie-xy/plugins/codec/yaml"
   _ "github.com/rookie-xy/plugins/codec/json"

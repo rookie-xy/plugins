@@ -2,9 +2,9 @@ package yaml
 
 import (
     yml "gopkg.in/yaml.v2"
-    "github.com/rookie-xy/worker/src/codec"
-    "github.com/rookie-xy/worker/src/prototype"
-    "github.com/rookie-xy/worker/src/register"
+    "github.com/rookie-xy/hubble/src/codec"
+    "github.com/rookie-xy/hubble/src/prototype"
+    "github.com/rookie-xy/hubble/src/register"
 )
 
 const Namespace = "plugin.codec.yaml"

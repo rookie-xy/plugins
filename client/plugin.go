@@ -4,10 +4,10 @@ import (
     "fmt"
     "errors"
 
-    "github.com/rookie-xy/worker/src/plugin"
-    "github.com/rookie-xy/worker/src/register"
-    "github.com/rookie-xy/worker/src/output"
-    "github.com/rookie-xy/worker/src/client"
+    "github.com/rookie-xy/hubble/src/plugin"
+    "github.com/rookie-xy/hubble/src/register"
+    "github.com/rookie-xy/hubble/src/output"
+    "github.com/rookie-xy/hubble/src/client"
 
   _ "github.com/rookie-xy/plugins/client/stdout"
 )
