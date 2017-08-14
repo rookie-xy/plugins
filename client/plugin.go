@@ -6,7 +6,6 @@ import (
 
     "github.com/rookie-xy/hubble/src/plugin"
     "github.com/rookie-xy/hubble/src/register"
-    "github.com/rookie-xy/hubble/src/output"
     "github.com/rookie-xy/hubble/src/client"
 
   _ "github.com/rookie-xy/plugins/client/stdout"
@@ -19,7 +18,7 @@ type clientPlugin struct {
     factory client.Factory
 }
 
-func Plugin(name string, f output.Factory) map[string][]interface{} {
+func Plugin(name string, f client.Factory) map[string][]interface{} {
      return plugin.Make(name, clientPlugin{name, f})
 }
 

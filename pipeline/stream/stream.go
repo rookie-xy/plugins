@@ -1,3 +1,3 @@
 package stream
 
-const Namespace = "plugin.channel.stream"
+const Namespace = "plugin.pipeline.stream"

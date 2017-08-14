@@ -1,3 +1,3 @@
 package queue
 
-const Namespace = "plugin.channel.queue"
+const Namespace = "plugin.pipeline.queue"

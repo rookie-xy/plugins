@@ -5,6 +5,7 @@ import (
     "github.com/rookie-xy/hubble/src/state"
     "github.com/rookie-xy/hubble/src/log"
     "github.com/rookie-xy/hubble/src/register"
+    "github.com/rookie-xy/hubble/src/pipeline"
 )
 
 const Namespace = "plugin.pipeline.slot"
@@ -14,15 +15,15 @@ type slot struct {
     channel chan event.Event
 }
 
-func open(log log.Log, size int) *slot {
+func open(log log.Log, size int) (pipeline.Pipeline, error) {
     return &slot{
         Log: log,
         channel: make(chan event.Event, size),
-    }
+    }, nil
 }
 
 // TODO 确定如何保证并发
-func (r *slot) Clone() *slot {
+func (r *slot) Clone() pipeline.Pipeline {
     return r
 }
 
@@ -45,5 +46,5 @@ func (r *slot) Close() int {
 }
 
 func init() {
-    register.Channel(Namespace, open)
+    register.Pipeline(Namespace, open)
 }

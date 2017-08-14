@@ -6,7 +6,7 @@ import (
 
     "github.com/rookie-xy/hubble/src/plugin"
     "github.com/rookie-xy/hubble/src/register"
-    "github.com/rookie-xy/hubble/src/channel"
+    "github.com/rookie-xy/hubble/src/pipeline"
 
   _ "github.com/rookie-xy/plugins/pipeline/slot"
   _ "github.com/rookie-xy/plugins/pipeline/queue"
@@ -17,10 +17,10 @@ const Namespace = "plugin.pipeline"
 
 type channelPlugin struct {
     name    string
-    factory channel.Factory
+    factory pipeline.Factory
 }
 
-func Plugin(name string, f channel.Factory) map[string][]interface{} {
+func Plugin(name string, f pipeline.Factory) map[string][]interface{} {
      return plugin.Make(name, channelPlugin{name, f})
 }
 
@@ -37,7 +37,7 @@ func init() {
 	           }
         }()
 
-        register.Channel(b.name, b.factory)
+        register.Pipeline(b.name, b.factory)
 
         return
     })
