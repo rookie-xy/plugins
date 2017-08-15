@@ -6,6 +6,7 @@ import (
     "github.com/rookie-xy/hubble/src/log"
     "github.com/rookie-xy/hubble/src/register"
     "github.com/rookie-xy/hubble/src/pipeline"
+    "github.com/rookie-xy/hubble/src/command"
 )
 
 const Namespace = "plugin.pipeline.slot"
@@ -15,10 +16,10 @@ type slot struct {
     channel chan event.Event
 }
 
-func open(log log.Log, size int) (pipeline.Pipeline, error) {
+func open(l log.Log, c *command.Command) (pipeline.Pipeline, error) {
     return &slot{
-        Log: log,
-        channel: make(chan event.Event, size),
+        Log: l,
+        channel: make(chan event.Event, 1024),
     }, nil
 }
 

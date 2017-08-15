@@ -9,6 +9,9 @@ import (
     "github.com/rookie-xy/hubble/src/client"
 
   _ "github.com/rookie-xy/plugins/client/stdout"
+  _ "github.com/rookie-xy/plugins/client/elasticsearch"
+  _ "github.com/rookie-xy/plugins/client/kafka"
+  _ "github.com/rookie-xy/plugins/client/logstash"
 )
 
 const Namespace = "plugin.client"

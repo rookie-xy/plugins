@@ -5,16 +5,21 @@ import (
     "github.com/rookie-xy/hubble/src/codec"
     "github.com/rookie-xy/hubble/src/prototype"
     "github.com/rookie-xy/hubble/src/register"
+    "github.com/rookie-xy/hubble/src/log"
+    "github.com/rookie-xy/hubble/src/command"
 )
 
 const Namespace = "plugin.codec.yaml"
 
 type Yaml struct {
+    log.Log
     name string
 }
 
-func New() *Yaml {
-    return &Yaml{}
+func New(l log.Log, c *command.Command) (codec.Codec, error) {
+    return &Yaml{
+        Log: l,
+    }, nil
 }
 
 func (r *Yaml) Encode(in prototype.Object) (prototype.Object, error) {
@@ -37,7 +42,5 @@ func (r *Yaml) Decode(in []byte) (prototype.Object, error) {
 }
 
 func init() {
-    register.Codec(Namespace, func(cfg *codec.Config) (codec.Codec, error) {
-        return New(), nil
-    })
+    register.Codec(Namespace, New)
 }
