@@ -3,10 +3,9 @@ package yaml
 import (
     yml "gopkg.in/yaml.v2"
     "github.com/rookie-xy/hubble/src/codec"
-    "github.com/rookie-xy/hubble/src/prototype"
+    "github.com/rookie-xy/hubble/src/types"
     "github.com/rookie-xy/hubble/src/register"
     "github.com/rookie-xy/hubble/src/log"
-    "github.com/rookie-xy/hubble/src/command"
 )
 
 const Namespace = "plugin.codec.yaml"
@@ -16,13 +15,13 @@ type Yaml struct {
     name string
 }
 
-func New(l log.Log, c *command.Command) (codec.Codec, error) {
+func New(l log.Log, v types.Value) (codec.Codec, error) {
     return &Yaml{
         Log: l,
     }, nil
 }
 
-func (r *Yaml) Encode(in prototype.Object) (prototype.Object, error) {
+func (r *Yaml) Encode(in types.Object) (types.Object, error) {
     out, error := yml.Marshal(in);
     if error != nil {
         return nil, error
@@ -31,7 +30,7 @@ func (r *Yaml) Encode(in prototype.Object) (prototype.Object, error) {
     return out, nil
 }
 
-func (r *Yaml) Decode(in []byte) (prototype.Object, error) {
+func (r *Yaml) Decode(in []byte) (types.Object, error) {
     var out interface{}
 
     if e := yml.Unmarshal(in, &out); e != nil {
