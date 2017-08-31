@@ -1,4 +1,4 @@
-package slot
+package channel
 
 import (
     "github.com/rookie-xy/hubble/src/event"
@@ -10,31 +10,31 @@ import (
 
 )
 
-const Namespace = "plugin.pipeline.slot"
+const Namespace = "plugin.pipeline.channel"
 
-type slot struct {
+type channel struct {
     log.Log
     channel chan event.Event
 }
 
-func open(l log.Log, v types.Value) (pipeline.Pipeline, error) {
-    return &slot{
+func open(l log.Log, v types.Value) (pipeline.Queue, error) {
+    return &channel{
         Log: l,
         channel: make(chan event.Event, 1024),
     }, nil
 }
 
 // TODO 确定如何保证并发
-func (r *slot) Clone() pipeline.Pipeline {
+func (r *channel) Clone() pipeline.Queue {
     return r
 }
 
-func (r *slot) Push(e event.Event) int {
+func (r *channel) Enqueue(e event.Event) int {
     r.channel <- e
     return state.Ok
 }
 
-func (r *slot) Pull(size int) (event.Event, int) {
+func (r *channel) Dequeue(size int) (event.Event, int) {
     event, open := <- r.channel
     if !open {
         return nil, state.Done
@@ -43,7 +43,11 @@ func (r *slot) Pull(size int) (event.Event, int) {
     return event, state.Ok
 }
 
-func (r *slot) Close() int {
+func (r *channel) Requeue(size int) (event.Event, int) {
+    return r.Dequeue(size)
+}
+
+func (r *channel) Close() int {
     return state.Ok
 }
 

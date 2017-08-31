@@ -26,7 +26,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="elasticsearch.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="elasticsearch.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/elasticsearch/elasticsearch.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="441">
@@ -106,11 +106,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="slot.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pipeline/slot/slot.go">
+      <file leaf-file-name="channel.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pipeline/channel/channel.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="861">
-              <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
+            <state relative-caret-position="-336">
+              <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -189,6 +189,8 @@
         <option value="$PROJECT_DIR$/client/zookeeper/etcd.go" />
         <option value="$PROJECT_DIR$/client/etcd/etcd.go" />
         <option value="$PROJECT_DIR$/client/redis/redis.go" />
+        <option value="$PROJECT_DIR$/pipeline/channel/slot.go" />
+        <option value="$PROJECT_DIR$/pipeline/channel/channel.go" />
       </list>
     </option>
   </component>
@@ -208,9 +210,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
-    <option name="y" value="24" />
+    <option name="y" value="-4" />
     <option name="width" value="1301" />
-    <option name="height" value="744" />
+    <option name="height" value="772" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -237,6 +239,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -257,9 +260,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -687,14 +689,15 @@
       <workItem from="1502764943956" duration="3750000" />
       <workItem from="1503475347793" duration="2841000" />
       <workItem from="1503661322324" duration="622000" />
+      <workItem from="1504179667172" duration="215000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50347000" />
+    <option name="totallyTimeSpent" value="50562000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1301" height="744" extended-state="6" />
+    <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -929,14 +932,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pipeline/slot/slot.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="861">
-          <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../hubble/src/client/client.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -991,6 +986,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="441">
           <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pipeline/channel/channel.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-336">
+          <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
           <folding />
         </state>
       </provider>
