@@ -5,8 +5,8 @@ import (
     "github.com/rookie-xy/hubble/src/state"
     "github.com/rookie-xy/hubble/src/log"
     "github.com/rookie-xy/hubble/src/register"
-    "github.com/rookie-xy/hubble/src/client"
-	"github.com/rookie-xy/hubble/src/types"
+    "github.com/rookie-xy/hubble/src/proxy"
+	   "github.com/rookie-xy/hubble/src/types"
 )
 
 const Namespace = "plugin.client.elasticsearch"
@@ -15,7 +15,7 @@ type elasticsearch struct {
     log.Log
 }
 
-func open(l log.Log, v types.Value) (client.Client, error) {
+func open(l log.Log, v types.Value) (proxy.Forward, error) {
     return &elasticsearch{
         Log: l,
     }, nil
