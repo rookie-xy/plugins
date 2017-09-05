@@ -4,11 +4,11 @@ import (
     "fmt"
     "errors"
 
-    "github.com/rookie-xy/hubble/src/plugin"
-    "github.com/rookie-xy/hubble/src/register"
-    "github.com/rookie-xy/hubble/src/pipeline"
+    "github.com/rookie-xy/hubble/plugin"
+    "github.com/rookie-xy/hubble/register"
+    "github.com/rookie-xy/hubble/pipeline"
 
-  _ "github.com/rookie-xy/plugins/pipeline/slot"
+  _ "github.com/rookie-xy/plugins/pipeline/channel"
   _ "github.com/rookie-xy/plugins/pipeline/queue"
   _ "github.com/rookie-xy/plugins/pipeline/stream"
 )
@@ -25,7 +25,7 @@ func Plugin(name string, f pipeline.Factory) map[string][]interface{} {
 }
 
 func init() {
-    plugin.MustRegisterLoader(Namespace, func(ifc interface{}) (err error) {
+    plugin.Register(Namespace, func(ifc interface{}) (err error) {
         b, ok := ifc.(channelPlugin)
         if !ok {
             return errors.New("plugin does not match output codec plugin type")

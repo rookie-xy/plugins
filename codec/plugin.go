@@ -3,12 +3,14 @@ package codec
 import (
     "fmt"
     "errors"
-    "github.com/rookie-xy/hubble/src/plugin"
-    "github.com/rookie-xy/hubble/src/codec"
-    "github.com/rookie-xy/hubble/src/register"
+    "github.com/rookie-xy/hubble/plugin"
+    "github.com/rookie-xy/hubble/codec"
+    "github.com/rookie-xy/hubble/register"
 
   _ "github.com/rookie-xy/plugins/codec/yaml"
   _ "github.com/rookie-xy/plugins/codec/json"
+  _ "github.com/rookie-xy/plugins/codec/line"
+  _ "github.com/rookie-xy/plugins/codec/multiline"
 )
 
 const Namespace = "plugin.codec"
@@ -23,7 +25,7 @@ func Plugin(name string, f codec.Factory) map[string][]interface{} {
 }
 
 func init() {
-    plugin.MustRegisterLoader(Namespace, func(ifc interface{}) (err error) {
+    plugin.Register(Namespace, func(ifc interface{}) (err error) {
         b, ok := ifc.(codecPlugin)
         if !ok {
             return errors.New("plugin does not match output codec plugin type")

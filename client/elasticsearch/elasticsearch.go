@@ -1,12 +1,12 @@
 package elasticsearch
 
 import (
-    "github.com/rookie-xy/hubble/src/event"
-    "github.com/rookie-xy/hubble/src/state"
-    "github.com/rookie-xy/hubble/src/log"
-    "github.com/rookie-xy/hubble/src/register"
-    "github.com/rookie-xy/hubble/src/proxy"
-	   "github.com/rookie-xy/hubble/src/types"
+    "github.com/rookie-xy/hubble/event"
+    "github.com/rookie-xy/hubble/state"
+    "github.com/rookie-xy/hubble/log"
+    "github.com/rookie-xy/hubble/register"
+    "github.com/rookie-xy/hubble/proxy"
+	   "github.com/rookie-xy/hubble/types"
 )
 
 const Namespace = "plugin.client.elasticsearch"
