@@ -1,12 +1,12 @@
 package channel
 
 import (
-    "github.com/rookie-xy/hubble/src/event"
-    "github.com/rookie-xy/hubble/src/state"
-    "github.com/rookie-xy/hubble/src/log"
-    "github.com/rookie-xy/hubble/src/register"
-    "github.com/rookie-xy/hubble/src/pipeline"
-    "github.com/rookie-xy/hubble/src/types"
+    "github.com/rookie-xy/hubble/event"
+    "github.com/rookie-xy/hubble/state"
+    "github.com/rookie-xy/hubble/log"
+    "github.com/rookie-xy/hubble/register"
+    "github.com/rookie-xy/hubble/pipeline"
+    "github.com/rookie-xy/hubble/types"
 
 )
 
