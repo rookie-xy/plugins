@@ -2,13 +2,11 @@ package yaml
 
 import (
     yml "gopkg.in/yaml.v2"
-    "github.com/rookie-xy/hubble/src/codec"
-    "github.com/rookie-xy/hubble/src/types"
-    "github.com/rookie-xy/hubble/src/register"
-    "github.com/rookie-xy/hubble/src/log"
+    "github.com/rookie-xy/hubble/codec"
+    "github.com/rookie-xy/hubble/types"
+    "github.com/rookie-xy/hubble/register"
+    "github.com/rookie-xy/hubble/log"
 )
-
-const Namespace = "plugin.codec.yaml"
 
 type Yaml struct {
     log.Log
@@ -30,14 +28,14 @@ func (r *Yaml) Encode(in types.Object) (types.Object, error) {
     return out, nil
 }
 
-func (r *Yaml) Decode(in []byte) (types.Object, error) {
+func (r *Yaml) Decode(in []byte, atEOF bool) (int, types.Object, error) {
     var out interface{}
 
     if e := yml.Unmarshal(in, &out); e != nil {
-        return nil, e
+        return 0, nil, e
     }
 
-    return out, nil
+    return 0, out, nil
 }
 
 func init() {
