@@ -23,8 +23,8 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
         log: l,
     }
 
-    if clone := factory.Clone(v.GetString()); clone != nil {
-        elasticsearch.pipeline = clone.Clone()
+    if pipeline := factory.Clone(v.GetString()); pipeline != nil {
+        elasticsearch.pipeline = pipeline
     }
 
     return elasticsearch, nil
