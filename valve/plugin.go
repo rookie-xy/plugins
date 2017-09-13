@@ -5,7 +5,7 @@ import (
     "errors"
     "github.com/rookie-xy/hubble/plugin"
     "github.com/rookie-xy/hubble/register"
-    "github.com/rookie-xy/hubble/types/value"
+    "github.com/rookie-xy/hubble/valve"
 
   _ "github.com/rookie-xy/plugins/valve/grok"
 )
@@ -13,11 +13,11 @@ import (
 const Namespace = "plugin.valve"
 
 type valvePlugin struct {
-    name    string
-    factory valve.Factory
+    name     string
+    factory  valve.Factory
 }
 
-func Plugin(name string, f value.Factory) map[string][]interface{} {
+func Plugin(name string, f valve.Factory) map[string][]interface{} {
      return plugin.Make(name, valvePlugin{name, f})
 }
 

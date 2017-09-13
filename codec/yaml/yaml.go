@@ -1,7 +1,7 @@
 package yaml
 
 import (
-    yml "gopkg.in/yaml.v2"
+    "gopkg.in/yaml.v2"
     "github.com/rookie-xy/hubble/codec"
     "github.com/rookie-xy/hubble/types"
     "github.com/rookie-xy/hubble/register"
@@ -20,7 +20,7 @@ func New(l log.Log, v types.Value) (codec.Codec, error) {
 }
 
 func (r *Yaml) Encode(in types.Object) (types.Object, error) {
-    out, error := yml.Marshal(in);
+    out, error := yaml.Marshal(in);
     if error != nil {
         return nil, error
     }
@@ -31,7 +31,7 @@ func (r *Yaml) Encode(in types.Object) (types.Object, error) {
 func (r *Yaml) Decode(in []byte, atEOF bool) (int, types.Object, error) {
     var out interface{}
 
-    if e := yml.Unmarshal(in, &out); e != nil {
+    if e := yaml.Unmarshal(in, &out); e != nil {
         return 0, nil, e
     }
 
