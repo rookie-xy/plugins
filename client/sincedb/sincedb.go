@@ -1,36 +1,42 @@
 package sincedb
 
 import (
+    "github.com/rookie-xy/hubble/log"
+    "github.com/rookie-xy/hubble/types"
     "github.com/rookie-xy/hubble/event"
     "github.com/rookie-xy/hubble/state"
-    "github.com/rookie-xy/hubble/log"
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/proxy"
-	   "github.com/rookie-xy/hubble/types"
+    "fmt"
 )
 
 const Namespace = "plugin.client.sincedb"
 
-type sincedb struct {
-    log.Log
+type sinceDB struct {
+    log log.Log
 }
 
 func open(l log.Log, v types.Value) (proxy.Forward, error) {
-    return &sincedb{
-        Log: l,
+    fmt.Println("sincedbbbbbbbbbbbbbb")
+    return &sinceDB{
+        log: l,
     }, nil
 }
 
-func (r *sincedb) Sender(e event.Event) int {
+func (r *sinceDB) Sender(e event.Event) int {
     return state.Ok
 }
 
-func (r *sincedb) Close() int {
+func (r *sinceDB) Add() int {
     return state.Ok
 }
 
-func (r *sincedb) Search() {
-    return
+func (r *sinceDB) Find() types.Object {
+    return state.Ok
+}
+
+func (r *sinceDB) Close() int {
+    return state.Ok
 }
 
 func init() {

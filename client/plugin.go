@@ -8,10 +8,14 @@ import (
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/proxy"
 
-  _ "github.com/rookie-xy/plugins/client/stdout"
+  _ "github.com/rookie-xy/plugins/client/console"
   _ "github.com/rookie-xy/plugins/client/elasticsearch"
   _ "github.com/rookie-xy/plugins/client/kafka"
   _ "github.com/rookie-xy/plugins/client/logstash"
+  _ "github.com/rookie-xy/plugins/client/redis"
+  _ "github.com/rookie-xy/plugins/client/sincedb"
+  _ "github.com/rookie-xy/plugins/client/service/elasticsearch"
+  _ "github.com/rookie-xy/plugins/client/service/sincedb"
 )
 
 const Namespace = "plugin.client"
@@ -21,15 +25,15 @@ type clientPlugin struct {
     factory proxy.Client
 }
 
-func Plugin(name string, f proxy.Client) map[string][]interface{} {
-     return plugin.Make(name, clientPlugin{name, f})
+func Plugin(name string, c proxy.Client) map[string][]interface{} {
+     return plugin.Make(name, clientPlugin{name, c})
 }
 
 func init() {
     plugin.Register(Namespace, func(ifc interface{}) (err error) {
         b, ok := ifc.(clientPlugin)
         if !ok {
-            return errors.New("plugin does not match output codec plugin type")
+            return errors.New("plugin does not match client plugin type")
         }
 
         defer func() {

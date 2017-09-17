@@ -4,18 +4,18 @@ type line struct {
     data []byte
 }
 
-func (c *line) Concat() *line {
+func (c *line) Concat(b []byte) *line {
     return nil
 }
 
 func (c *line) Length() int {
-    return nil
+    return -1
 }
 
 func (c *line) Clear() int {
-    return nil
+    return -1
 }
 
-func (c *line) Get() []byte {
-    return nil
+func (c *line) Get() string {
+    return ""
 }

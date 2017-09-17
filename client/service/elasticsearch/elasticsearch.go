@@ -1,4 +1,4 @@
-package pipeline
+package elasticsearch
 
 import (
     "github.com/rookie-xy/hubble/event"
@@ -11,7 +11,7 @@ import (
     "github.com/rookie-xy/hubble/pipeline"
 )
 
-const Namespace = "plugin.client.pipeline.elasticsearch"
+const Namespace = "plugin.client.service.elasticsearch"
 
 type elasticsearch struct {
     log       log.Log
@@ -23,7 +23,7 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
         log: l,
     }
 
-    if pipeline := factory.Clone(v.GetString()); pipeline != nil {
+    if pipeline := factory.Queue(v.GetString()); pipeline != nil {
         elasticsearch.pipeline = pipeline
     }
 

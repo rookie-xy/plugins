@@ -43,8 +43,8 @@ func (r *channel) Dequeue(size int) (event.Event, int) {
     return event, state.Ok
 }
 
-func (r *channel) Requeue(size int) (event.Event, int) {
-    return r.Dequeue(size)
+func (r *channel) Requeue(e event.Event) int {
+    return r.Enqueue(e)
 }
 
 func (r *channel) Close() int {
