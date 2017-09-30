@@ -29,7 +29,9 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
         sinceDB.pipeline = pipeline
     }
 
-    if sincdb := factory.Forward("plugin.client.sincedb"); sincdb != nil {
+    if sincdb, err := factory.Forward("plugin.client.sincedb"); err != nil {
+        return nil, err
+    } else {
         sinceDB.SinceDB = adapter.AdapterSinceDB(sincdb)
     }
 
