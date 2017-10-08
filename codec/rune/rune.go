@@ -28,7 +28,7 @@ func (r *Rune) Encode(in types.Object) (types.Object, error) {
 // means that erroneous UTF-8 encodings translate to U+FFFD = "\xef\xbf\xbd".
 // Because of the Scan interface, this makes it impossible for the client to
 // distinguish correctly encoded replacement runes from encoding errors.
-func (r *Rune) Decode(data []byte, atEOF bool) (int, types.Object, error) {
+func (r *Rune) Decode(data []byte, atEOF bool) (int, []byte, error) {
     if atEOF && len(data) == 0 {
         return 0, nil, nil
     }

@@ -3,6 +3,7 @@ package sincedb
 import (
     "os"
     "fmt"
+    "encoding/json"
     "path/filepath"
 
     "github.com/rookie-xy/hubble/log"
@@ -11,89 +12,87 @@ import (
     "github.com/rookie-xy/hubble/state"
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/proxy"
-
+    "github.com/rookie-xy/hubble/paths"
+    "github.com/rookie-xy/hubble/adapter"
 )
 
 const Namespace = "plugin.client.sincedb"
 
 type sinceDB struct {
-    log log.Log
+    log     log.Log
+    path    string
+    values  []types.Value
 }
 
 func (r *sinceDB) Init() error {
-	// The registry file is opened in the data path
-	r.registryFile = paths.Resolve(paths.Data, r.registryFile)
+    r.path = paths.Resolve(paths.Data, r.path)
 
-	// Create directory if it does not already exist.
-	registryPath := filepath.Dir(r.registryFile)
-	err := os.MkdirAll(registryPath, 0750)
-	if err != nil {
-		return fmt.Errorf("Failed to created registry file dir %s: %v", registryPath, err)
+    path := filepath.Dir(r.path)
+    err := os.MkdirAll(path, 0750)
+    if err != nil {
+        return fmt.Errorf("Failed to created registry file dir %s: %v", path, err)
+    }
+
+    fileInfo, err := os.Lstat(r.path)
+    if os.IsNotExist(err) {
+        fmt.Printf("No registry file found under: %s. Creating a new registry file.", r.path)
+        return r.Sender(nil, false)
 	}
 
-	// Check if files exists
-	fileInfo, err := os.Lstat(r.registryFile)
-	if os.IsNotExist(err) {
-		logp.Info("No registry file found under: %s. Creating a new registry file.", r.registryFile)
-		// No registry exists yet, write empty state to check if registry can be written
-		return r.writeRegistry()
-	}
-	if err != nil {
-		return err
+    if err != nil {
+        return err
 	}
 
-	// Check if regular file, no dir, no symlink
-	if !fileInfo.Mode().IsRegular() {
-		// Special error message for directory
-		if fileInfo.IsDir() {
-			return fmt.Errorf("Registry file path must be a file. %s is a directory.", r.registryFile)
-		}
-		return fmt.Errorf("Registry file path is not a regular file: %s", r.registryFile)
-	}
+    if !fileInfo.Mode().IsRegular() {
+        if fileInfo.IsDir() {
+            return fmt.Errorf("Registry file path must be a file. %s is a directory.", r.path)
+        }
+        return fmt.Errorf("Registry file path is not a regular file: %s", r.path)
+    }
 
-	logp.Info("Registry file set to: %s", r.registryFile)
+	fmt.Printf("Registry file set to: %s", r.path)
 
-	return nil
-}
-
-func (r *sinceDB) GetStates() []file.State {
-	return r.states.GetStates()
+    return nil
 }
 
 func (r *sinceDB) load() error {
-	f, err := os.Open(r.registryFile)
-	if err != nil {
-		return err
-	}
+    f, err := os.Open(r.path)
+    if err != nil {
+        return err
+    }
+    defer f.Close()
 
-	defer f.Close()
+    fmt.Printf("Loading registrar data from %s", r.path)
 
-	logp.Info("Loading registrar data from %s", r.registryFile)
+    decoder := json.NewDecoder(f)
+    values  := []types.Value{}
+    if err = decoder.Decode(&values); err != nil {
+        return fmt.Errorf("Error decoding states: %s", err)
+    }
 
-	decoder := json.NewDecoder(f)
-	states := []file.State{}
-	err = decoder.Decode(&states)
-	if err != nil {
-		return fmt.Errorf("Error decoding states: %s", err)
-	}
-
-	states = resetStates(states)
-	r.states.SetStates(states)
-	logp.Info("States Loaded from registrar: %+v", len(states))
+    r.values = reset(values)
+    fmt.Printf("States Loaded from registrar: %+v", len(r.values))
 
 	return nil
 }
 
-// resetStates sets all states to finished and disable TTL on restart
-// For all states covered by a prospector, TTL will be overwritten with the prospector value
-func resetStates(states []file.State) []file.State {
-	for key, state := range states {
-		state.Finished = true
-		// Set ttl to -2 to easily spot which states are not managed by a prospector
-		state.TTL = -2
-		states[key] = state
-	}
-	return states
+func reset(values []types.Value) []types.Value {
+    for key, value := range values {
+        state.Finished = true
+        state.TTL = -2
+        values[key] = value
+    }
+
+    return values
+}
+
+func rotate(path, temp string) error {
+    if e := os.Rename(temp, path); e != nil {
+        fmt.Printf("Rotate error: %s", e)
+        return e
+    }
+
+    return nil
 }
 
 func open(l log.Log, v types.Value) (proxy.Forward, error) {
@@ -110,16 +109,71 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
     return sincedb, nil
 }
 
-func (r *sinceDB) Sender(e event.Event) int {
-    return state.Ok
+func (r *sinceDB) ID(value types.Value) string {
+    file := value.GetMap()
+    return fmt.Sprintf("%d-%d", file["inode"], file["device"])
 }
 
-func (r *sinceDB) Add() int {
-    return state.Ok
+func (s *sinceDB) update(e event.Event) error {
+    for i, value := range s.values {
+    	if s.ID(value) != e.ID() {
+    	    continue
+        }
+
+        s.values[i] = e.Value()
+    }
+
+    return nil
 }
 
-func (r *sinceDB) Find() types.Object {
-    return []byte("this is find")
+func (r *sinceDB) disk() error {
+    fmt.Printf("registrar write registry file: %s", r.path)
+
+    temp := r.path + ".new"
+    f, err := os.OpenFile(temp, os.O_RDWR|os.O_CREATE|os.O_TRUNC|os.O_SYNC, 0600)
+    if err != nil {
+        fmt.Printf("Failed to create tempfile (%s) for writing: %s", temp, err)
+        return err
+    }
+
+    encoder := json.NewEncoder(f)
+    if err = encoder.Encode(r.values); err != nil {
+        f.Close()
+        fmt.Printf("Error when encoding the states: %s", err)
+        return err
+    }
+
+    f.Close()
+    err = rotate(r.path, temp)
+
+    fmt.Printf("registrar Registry file updated. %d states written.", len(r.values))
+    return err
+}
+
+func (r *sinceDB) Sender(e event.Event, batch bool) error {
+	if batch {
+        events := adapter.ToEvents(e)
+        for _, event := range events.Batch() {
+        	if err := r.update(event); err != nil {
+        	    return err
+            }
+        }
+
+    } else {
+        if err := r.update(e); err != nil {
+            return err
+        }
+    }
+
+    if err := r.disk(); err != nil {
+        return err
+    }
+
+    return nil
+}
+
+func (r *sinceDB) Get() []types.Value {
+    return r.values
 }
 
 func (r *sinceDB) Close() int {

@@ -33,14 +33,14 @@ func (m *Multiline) Encode(in types.Object) (types.Object, error) {
 // by one mandatory newline. In regular expression notation, it is `\r?\n`.
 // The last non-empty line of input will be returned even if it has no
 // newline.
-func (m *Multiline) Decode(data []byte, atEOF bool) (int, types.Object, error) {
+func (m *Multiline) Decode(data []byte, atEOF bool) (int, []byte, error) {
     if atEOF && len(data) == 0 {
         return 0, nil, nil
     }
 
     if i := bytes.IndexByte(data, m.match); i >= 0 {
         // We have a full newline-terminated line.
-        var multiline string
+        var multiline []byte
 
         line := dropCR(data[0:i])
         if match(line) {

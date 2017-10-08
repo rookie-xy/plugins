@@ -28,14 +28,14 @@ func (r *Yaml) Encode(in types.Object) (types.Object, error) {
     return out, nil
 }
 
-func (r *Yaml) Decode(in []byte, atEOF bool) (int, types.Object, error) {
+func (r *Yaml) Decode(in []byte, atEOF bool) (int, []byte, error) {
     var out interface{}
 
     if e := yaml.Unmarshal(in, &out); e != nil {
         return 0, nil, e
     }
 
-    return 0, out, nil
+    return 0, out.([]byte), nil
 }
 
 func init() {

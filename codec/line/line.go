@@ -30,7 +30,7 @@ func (l *Line) Encode(in types.Object) (types.Object, error) {
 // by one mandatory newline. In regular expression notation, it is `\r?\n`.
 // The last non-empty line of input will be returned even if it has no
 // newline.
-func (l *Line) Decode(data []byte, atEOF bool) (int, types.Object, error) {
+func (l *Line) Decode(data []byte, atEOF bool) (int, []byte, error) {
     if atEOF && len(data) == 0 {
         return 0, nil, nil
     }

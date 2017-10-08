@@ -26,7 +26,7 @@ func (w *Word) Encode(in types.Object) (types.Object, error) {
 // space-separated word of text, with surrounding spaces deleted. It will
 // never return an empty string. The definition of space is set by
 // unicode.IsSpace.
-func (w *Word) Decode(data []byte, atEOF bool) (int, types.Object, error) {
+func (w *Word) Decode(data []byte, atEOF bool) (int, []byte, error) {
     // Skip leading spaces.
     start := 0
     for width := 0; start < len(data); start += width {

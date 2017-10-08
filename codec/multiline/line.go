@@ -16,6 +16,6 @@ func (c *line) Clear() int {
     return -1
 }
 
-func (c *line) Get() string {
-    return ""
+func (c *line) Get() []byte {
+    return nil
 }
