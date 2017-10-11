@@ -13,7 +13,6 @@ import (
 // Log contains all log related data
 type Log struct {
    *Configure
-   *Backoff
 
 	source       adapter.Source
 	offset       int64
@@ -24,7 +23,7 @@ type Log struct {
 }
 
 // New creates a new log instance to read log sources
-func New(lg log.Log, v types.Value, src source.Source) (source.Source, error) {
+func New(l log.Log, v types.Value, src source.Source) (source.Source, error) {
     var offset int64
 	if seeker, ok := src.(io.Seeker); ok {
 		var err error
@@ -36,15 +35,15 @@ func New(lg log.Log, v types.Value, src source.Source) (source.Source, error) {
 
 	log := &Log{
 		source:       adapter.LogSource(src),
-		offset:       0,
+		offset:       offset,
 		lastTimeRead: time.Now(),
-		log:          lg,
+		log:          l,
 		done:         make(chan struct{}),
 	}
 
-	log.offset = offset
-	log.backoff = backoff.Min
-	log.Backoff = backoff
+    if err := Init(v, log); err != nil {
+    	return nil, err
+	}
 
 	return log, nil
 }
