@@ -32,15 +32,15 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
     if sincdb, err := factory.Forward("plugin.client.sincedb"); err != nil {
         return nil, err
     } else {
-        sinceDB.SinceDB = adapter.AdapterSinceDB(sincdb)
+        sinceDB.SinceDB = adapter.FileSinceDB(sincdb)
     }
 
     return sinceDB, nil
 }
 
-func (s *sinceDB) Sender(e event.Event) int {
+func (s *sinceDB) Sender(e event.Event, batch bool) error {
     s.pipeline.Enqueue(e)
-    return state.Ok
+    return nil
 }
 
 func (s *sinceDB) Add() int {

@@ -78,8 +78,8 @@ func (r *sinceDB) load() error {
 
 func reset(values []types.Value) []types.Value {
     for key, value := range values {
-        state.Finished = true
-        state.TTL = -2
+//        state.Finished = true
+//        state.TTL = -2
         values[key] = value
     }
 
@@ -115,12 +115,12 @@ func (r *sinceDB) ID(value types.Value) string {
 }
 
 func (s *sinceDB) update(e event.Event) error {
-    for i, value := range s.values {
+    for _, value := range s.values {
     	if s.ID(value) != e.ID() {
     	    continue
         }
 
-        s.values[i] = e.Value()
+        //s.values[i] = e.Value()
     }
 
     return nil

@@ -30,10 +30,10 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
     return elasticsearch, nil
 }
 
-func (r *elasticsearch) Sender(e event.Event) int {
+func (r *elasticsearch) Sender(e event.Event, batch bool) error {
     r.pipeline.Enqueue(e)
 
-    return state.Ok
+    return nil
 }
 
 func (r *elasticsearch) Close() int {

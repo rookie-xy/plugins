@@ -21,8 +21,8 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
     }, nil
 }
 
-func (r *elasticsearch) Sender(e event.Event) int {
-    return state.Ok
+func (r *elasticsearch) Sender(e event.Event, batch bool) error {
+    return nil
 }
 
 func (r *elasticsearch) Close() int {

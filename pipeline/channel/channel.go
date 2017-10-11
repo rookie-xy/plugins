@@ -29,21 +29,21 @@ func (r *channel) Clone() pipeline.Queue {
     return r
 }
 
-func (r *channel) Enqueue(e event.Event) int {
+func (r *channel) Enqueue(e event.Event) error {
     r.channel <- e
-    return state.Ok
+    return nil
 }
 
-func (r *channel) Dequeue(size int) (event.Event, int) {
+func (r *channel) Dequeue(size int) (event.Event, error) {
     event, open := <- r.channel
     if !open {
-        return nil, state.Done
+        return nil/*, state.Done*/, nil
     }
 
-    return event, state.Ok
+    return event, /*state.Ok*/ nil
 }
 
-func (r *channel) Requeue(e event.Event) int {
+func (r *channel) Requeue(e event.Event) error {
     return r.Enqueue(e)
 }
 
