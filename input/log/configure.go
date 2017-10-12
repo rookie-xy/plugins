@@ -3,6 +3,7 @@ package log
 import (
     "time"
     "github.com/rookie-xy/hubble/types"
+    "github.com/rookie-xy/hubble/types/value"
 )
 
 type Configure struct {
@@ -52,12 +53,46 @@ func Init(v types.Value, l *Log) error {
         eof = v.(bool)
     }
 
+    if v, ok := vMap["backoff"]; ok {
+        this := value.New(v)
+        vMap = this.GetMap()
+    }
+
+
+    min := 3 * time.Second
+    if v, ok := vMap["min"]; ok {
+        min, err = time.ParseDuration(v.(string))
+        if err != nil {
+            return err
+        }
+    }
+
+    max := 10 * time.Second
+    if v, ok := vMap["max"]; ok {
+        timeout, err = time.ParseDuration(v.(string))
+        if err != nil {
+            return err
+        }
+    }
+
+    factor := 37
+    if v, ok := vMap["factor"]; ok {
+        factor = v.(int)
+    }
+
+    backoff := &Backoff{
+        Min: min,
+        Max: max,
+        Factor:factor,
+    }
+
     configure := &Configure{
+    	Backoff:  backoff,
         Inactive: inactive,
         Timeout:  timeout,
-        Removed: removed,
-        Renamed: renamed,
-        EOF: eof,
+        Removed:  removed,
+        Renamed:  renamed,
+        EOF:      eof,
     }
 
     l.Configure = configure

@@ -8,12 +8,13 @@ import (
 	"github.com/rookie-xy/hubble/types"
 	"github.com/rookie-xy/hubble/source"
 	"github.com/rookie-xy/hubble/adapter"
+	"github.com/rookie-xy/hubble/register"
+	"github.com/rookie-xy/hubble/input"
 )
 
 // Log contains all log related data
 type Log struct {
-   *Configure
-
+    cfg         *Configure
 	source       adapter.Source
 	offset       int64
 	lastTimeRead time.Time
@@ -23,19 +24,8 @@ type Log struct {
 }
 
 // New creates a new log instance to read log sources
-func New(l log.Log, v types.Value, src source.Source) (source.Source, error) {
-    var offset int64
-	if seeker, ok := src.(io.Seeker); ok {
-		var err error
-		offset, err = seeker.Seek(0, os.SEEK_CUR)
-		if err != nil {
-			return nil, err
-		}
-	}
-
+func New(l log.Log, v types.Value) (input.Input, error) {
 	log := &Log{
-		source:       adapter.LogSource(src),
-		offset:       offset,
 		lastTimeRead: time.Now(),
 		log:          l,
 		done:         make(chan struct{}),
@@ -46,6 +36,21 @@ func New(l log.Log, v types.Value, src source.Source) (source.Source, error) {
 	}
 
 	return log, nil
+}
+
+func (f *Log) Init(src source.Source) error {
+    var offset int64
+	if seeker, ok := src.(io.Seeker); ok {
+		var err error
+		offset, err = seeker.Seek(0, os.SEEK_CUR)
+		if err != nil {
+			return err
+		}
+	}
+
+	f.source = src
+	f.offset = offset
+	return nil
 }
 
 // Read reads from the reader and updates the offset
@@ -67,11 +72,11 @@ func (f *Log) Read(buf []byte) (int, error) {
 		}
 		totalN += n
 
-		// Read from source completed without error
+		// Read from input completed without error
 		// Either end reached or buffer full
 		if err == nil {
 			// reset backoff for next read
-			f.backoff = f.Backoff.Min
+			f.backoff = f.cfg.Min
 			return totalN, nil
 		}
 
@@ -104,7 +109,7 @@ func (f *Log) errorChecks(err error) error {
 		return err
 	}
 
-	if err == io.EOF && f.Log.EOF {
+	if err == io.EOF && f.cfg.EOF {
 		return err
 	}
 
@@ -126,18 +131,18 @@ func (f *Log) errorChecks(err error) error {
 
 	// Check file wasn't read for longer then CloseInactive
 	age := time.Since(f.lastTimeRead)
-	if age > f.Log.Inactive {
+	if age > f.cfg.Inactive {
 		return source.ErrInactive
 	}
 
-	if f.Log.Renamed {
+	if f.cfg.Renamed {
 		// Check if the file can still be found under the same path
 		if !IsSameFile(f.source.Name(), info) {
 			return source.ErrRenamed
 		}
 	}
 
-	if f.Log.Removed {
+	if f.cfg.Removed {
 		// Check if the file name exists. See https://github.com/elastic/filebeat/issues/93
 		_, statErr := os.Stat(f.source.Name())
 
@@ -159,16 +164,20 @@ func (f *Log) wait() {
 	}
 
 	// Increment backoff up to maxBackoff
-	if f.backoff < f.Backoff.Max {
-		f.backoff = f.backoff * time.Duration(f.Backoff.Factor)
-		if f.backoff > f.Backoff.Max {
-			f.backoff = f.Backoff.Max
+	if f.backoff < f.cfg.Max {
+		f.backoff = f.backoff * time.Duration(f.cfg.Factor)
+		if f.backoff > f.cfg.Max {
+			f.backoff = f.cfg.Max
 		}
 	}
 }
 
 // Close closes the done channel but no th the file handler
-func (f *Log) Close() {
+func (f *Log) Close() error {
 	close(f.done)
 	// Note: File reader is not closed here because that leads to race conditions
+}
+
+func init() {
+    register.Input(Namespace, New)
 }

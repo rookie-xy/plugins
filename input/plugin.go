@@ -1,4 +1,4 @@
-package codec
+package input
 
 import (
     "fmt"
@@ -7,25 +7,25 @@ import (
     "github.com/rookie-xy/hubble/source"
     "github.com/rookie-xy/hubble/register"
 
-  _ "github.com/rookie-xy/plugins/source/log"
+  _ "github.com/rookie-xy/plugins/input/log"
 )
 
-const Namespace = "plugin.source"
+const Namespace = "plugin.input"
 
-type sourcePlugin struct {
+type inputPlugin struct {
     name    string
     factory source.Factory
 }
 
 func Plugin(name string, f source.Factory) map[string][]interface{} {
-     return plugin.Make(name, sourcePlugin{name, f})
+     return plugin.Make(name, inputPlugin{name, f})
 }
 
 func init() {
     plugin.Register(Namespace, func(ifc interface{}) (err error) {
-        b, ok := ifc.(sourcePlugin)
+        b, ok := ifc.(inputPlugin)
         if !ok {
-            return errors.New("plugin does not match source plugin type")
+            return errors.New("plugin does not match input plugin type")
         }
 
         defer func() {
