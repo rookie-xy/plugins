@@ -9,16 +9,17 @@ import (
     "github.com/rookie-xy/hubble/types"
     "github.com/rookie-xy/hubble/factory"
     "github.com/rookie-xy/hubble/pipeline"
+    "github.com/rookie-xy/hubble/output"
 )
 
-const Namespace = "plugin.client.service.elasticsearch"
+const Namespace = "plugin.output.elasticsearch"
 
 type elasticsearch struct {
     log       log.Log
     pipeline  pipeline.Queue
 }
 
-func open(l log.Log, v types.Value) (proxy.Forward, error) {
+func open(l log.Log, v types.Value) (output.Output, error) {
     elasticsearch := &elasticsearch{
         log: l,
     }
@@ -41,5 +42,5 @@ func (r *elasticsearch) Close() int {
 }
 
 func init() {
-    register.Client(Namespace, open)
+    register.Output(Namespace, open)
 }

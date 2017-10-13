@@ -4,20 +4,20 @@ import (
     "fmt"
     "errors"
     "github.com/rookie-xy/hubble/plugin"
-    "github.com/rookie-xy/hubble/source"
     "github.com/rookie-xy/hubble/register"
 
   _ "github.com/rookie-xy/plugins/input/log"
+    "github.com/rookie-xy/hubble/input"
 )
 
 const Namespace = "plugin.input"
 
 type inputPlugin struct {
     name    string
-    factory source.Factory
+    factory input.Factory
 }
 
-func Plugin(name string, f source.Factory) map[string][]interface{} {
+func Plugin(name string, f input.Factory) map[string][]interface{} {
      return plugin.Make(name, inputPlugin{name, f})
 }
 
@@ -34,7 +34,7 @@ func init() {
 	           }
         }()
 
-        register.Source(b.name, b.factory)
+        register.Input(b.name, b.factory)
         return
     })
 }

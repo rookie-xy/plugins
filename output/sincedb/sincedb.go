@@ -10,9 +10,10 @@ import (
     "github.com/rookie-xy/hubble/proxy"
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/adapter"
+    "github.com/rookie-xy/hubble/output"
 )
 
-const Namespace = "plugin.client.service.sincedb"
+const Namespace = "plugin.output.sincedb"
 
 type sinceDB struct {
     adapter.SinceDB
@@ -20,7 +21,7 @@ type sinceDB struct {
     pipeline  pipeline.Queue
 }
 
-func open(l log.Log, v types.Value) (proxy.Forward, error) {
+func open(l log.Log, v types.Value) (output.Output, error) {
     sinceDB := &sinceDB{
         log: l,
     }
@@ -56,5 +57,5 @@ func (s *sinceDB) Close() int {
 }
 
 func init() {
-    register.Client(Namespace, open)
+    register.Output(Namespace, open)
 }

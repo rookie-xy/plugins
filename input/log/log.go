@@ -7,15 +7,14 @@ import (
 	"github.com/rookie-xy/hubble/log"
 	"github.com/rookie-xy/hubble/types"
 	"github.com/rookie-xy/hubble/source"
-	"github.com/rookie-xy/hubble/adapter"
 	"github.com/rookie-xy/hubble/register"
 	"github.com/rookie-xy/hubble/input"
 )
 
 // Log contains all log related data
 type Log struct {
-    cfg         *Configure
-	source       adapter.Source
+    conf        *Configure
+	source       source.Source
 	offset       int64
 	lastTimeRead time.Time
     backoff      time.Duration
@@ -76,7 +75,7 @@ func (f *Log) Read(buf []byte) (int, error) {
 		// Either end reached or buffer full
 		if err == nil {
 			// reset backoff for next read
-			f.backoff = f.cfg.Min
+			f.backoff = f.conf.Min
 			return totalN, nil
 		}
 
@@ -109,7 +108,7 @@ func (f *Log) errorChecks(err error) error {
 		return err
 	}
 
-	if err == io.EOF && f.cfg.EOF {
+	if err == io.EOF && f.conf.EOF {
 		return err
 	}
 
@@ -131,18 +130,18 @@ func (f *Log) errorChecks(err error) error {
 
 	// Check file wasn't read for longer then CloseInactive
 	age := time.Since(f.lastTimeRead)
-	if age > f.cfg.Inactive {
+	if age > f.conf.Inactive {
 		return source.ErrInactive
 	}
 
-	if f.cfg.Renamed {
+	if f.conf.Renamed {
 		// Check if the file can still be found under the same path
 		if !IsSameFile(f.source.Name(), info) {
 			return source.ErrRenamed
 		}
 	}
 
-	if f.cfg.Removed {
+	if f.conf.Removed {
 		// Check if the file name exists. See https://github.com/elastic/filebeat/issues/93
 		_, statErr := os.Stat(f.source.Name())
 
@@ -164,10 +163,10 @@ func (f *Log) wait() {
 	}
 
 	// Increment backoff up to maxBackoff
-	if f.backoff < f.cfg.Max {
-		f.backoff = f.backoff * time.Duration(f.cfg.Factor)
-		if f.backoff > f.cfg.Max {
-			f.backoff = f.cfg.Max
+	if f.backoff < f.conf.Max {
+		f.backoff = f.backoff * time.Duration(f.conf.Factor)
+		if f.backoff > f.conf.Max {
+			f.backoff = f.conf.Max
 		}
 	}
 }
@@ -176,6 +175,7 @@ func (f *Log) wait() {
 func (f *Log) Close() error {
 	close(f.done)
 	// Note: File reader is not closed here because that leads to race conditions
+	return nil
 }
 
 func init() {

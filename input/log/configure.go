@@ -95,7 +95,7 @@ func Init(v types.Value, l *Log) error {
         EOF:      eof,
     }
 
-    l.Configure = configure
+    l.conf = configure
 
     return nil
 }
