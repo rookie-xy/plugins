@@ -5,7 +5,7 @@ import (
     "github.com/rookie-xy/hubble/state"
     "github.com/rookie-xy/hubble/log"
     "github.com/rookie-xy/hubble/register"
-    "github.com/rookie-xy/hubble/proxy"
+//    "github.com/rookie-xy/hubble/proxy"
     "github.com/rookie-xy/hubble/types"
     "github.com/rookie-xy/hubble/factory"
     "github.com/rookie-xy/hubble/pipeline"
