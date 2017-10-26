@@ -1,4 +1,4 @@
-package sincedb
+package sinceDB
 
 import (
     "os"
@@ -16,12 +16,11 @@ import (
 //    "github.com/rookie-xy/hubble/adapter"
 )
 
-const Namespace = "plugin.client.sincedb"
-
 type sinceDB struct {
     log     log.Log
     path    string
     values  []types.Value
+    events  []event.Event
 }
 
 func (r *sinceDB) Init() error {
@@ -166,6 +165,22 @@ func (r *sinceDB) Sender(e event.Event) error {
 
     } else {
         if err := r.update(e); err != nil {
+            return err
+        }
+    }
+
+
+    return nil
+}
+
+func (r *sinceDB) Commit(e event.Event) bool {
+    r.events = append(r.events, e)
+    return true
+}
+
+func (r *sinceDB) Senders() error {
+    for _, event := range r.events {
+        if err := r.Sender(event); err != nil {
             return err
         }
     }

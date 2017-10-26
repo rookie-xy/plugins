@@ -1,4 +1,4 @@
-package sincedb
+package sinceDB
 
 import (
     "github.com/rookie-xy/hubble/event"
@@ -12,8 +12,6 @@ import (
     "github.com/rookie-xy/hubble/adapter"
     "github.com/rookie-xy/hubble/output"
 )
-
-const Namespace = "plugin.output.sincedb"
 
 type sinceDB struct {
     adapter.SinceDB
@@ -30,10 +28,10 @@ func open(l log.Log, v types.Value) (output.Output, error) {
         sinceDB.pipeline = pipeline
     }
 
-    if sincdb, err := factory.Forward("plugin.client.sincedb"); err != nil {
+    if sinceDb, err := factory.Forward(SinceDB); err != nil {
         return nil, err
     } else {
-        sinceDB.SinceDB = adapter.FileSinceDB(sincdb)
+        sinceDB.SinceDB = adapter.FileSinceDB(sinceDb)
     }
 
     return sinceDB, nil

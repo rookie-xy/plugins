@@ -16,8 +16,6 @@ import (
   _ "github.com/rookie-xy/plugins/client/sincedb"
 )
 
-const Namespace = "plugin.client"
-
 type clientPlugin struct {
     name    string
     factory proxy.Client
