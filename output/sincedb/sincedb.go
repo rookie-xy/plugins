@@ -7,10 +7,10 @@ import (
     "github.com/rookie-xy/hubble/types"
     "github.com/rookie-xy/hubble/factory"
     "github.com/rookie-xy/hubble/pipeline"
-//    "github.com/rookie-xy/hubble/proxy"
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/adapter"
     "github.com/rookie-xy/hubble/output"
+    "github.com/rookie-xy/hubble/plugin"
 )
 
 type sinceDB struct {
@@ -24,11 +24,13 @@ func open(l log.Log, v types.Value) (output.Output, error) {
         log: l,
     }
 
+    // Open the sinceDB connection channel
     if pipeline := factory.Queue(v.GetString()); pipeline != nil {
         sinceDB.pipeline = pipeline
     }
 
-    if sinceDb, err := factory.Forward(SinceDB); err != nil {
+    // Open the sinceDB client and get the file state
+    if sinceDb, err := factory.Forward(plugin.Flag + "." + v.GetString()); err != nil {
         return nil, err
     } else {
         sinceDB.SinceDB = adapter.FileSinceDB(sinceDb)
