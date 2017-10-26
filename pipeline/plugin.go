@@ -1,4 +1,4 @@
-package codec
+package pipeline
 
 import (
     "fmt"
@@ -13,8 +13,6 @@ import (
   _ "github.com/rookie-xy/plugins/pipeline/stream"
 )
 
-const Namespace = "plugin.pipeline"
-
 type channelPlugin struct {
     name    string
     factory pipeline.Factory
@@ -28,7 +26,7 @@ func init() {
     plugin.Register(Namespace, func(ifc interface{}) (err error) {
         b, ok := ifc.(channelPlugin)
         if !ok {
-            return errors.New("plugin does not match output codec plugin type")
+            return errors.New("plugin does not match pipeline plugin type")
         }
 
         defer func() {

@@ -39,7 +39,7 @@ func open(l log.Log, v types.Value) (output.Output, error) {
     return sinceDB, nil
 }
 
-func (s *sinceDB) Sender(e event.Event, batch bool) error {
+func (s *sinceDB) Sender(e event.Event) error {
     s.pipeline.Enqueue(e)
     return nil
 }

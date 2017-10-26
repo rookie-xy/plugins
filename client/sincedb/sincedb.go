@@ -13,7 +13,7 @@ import (
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/proxy"
     "github.com/rookie-xy/hubble/paths"
-    "github.com/rookie-xy/hubble/adapter"
+//    "github.com/rookie-xy/hubble/adapter"
 )
 
 const Namespace = "plugin.client.sincedb"
@@ -36,7 +36,7 @@ func (r *sinceDB) Init() error {
     fileInfo, err := os.Lstat(r.path)
     if os.IsNotExist(err) {
         fmt.Printf("No registry file found under: %s. Creating a new registry file.", r.path)
-        return r.Sender(nil, false)
+        return r.Sender(nil)
 	}
 
     if err != nil {
@@ -115,6 +115,7 @@ func (r *sinceDB) ID(value types.Value) string {
 }
 
 func (s *sinceDB) update(e event.Event) error {
+	/*
     for _, value := range s.values {
     	if s.ID(value) != e.ID() {
     	    continue
@@ -122,6 +123,7 @@ func (s *sinceDB) update(e event.Event) error {
 
         //s.values[i] = e.Value()
     }
+	*/
 
     return nil
 }
@@ -150,14 +152,17 @@ func (r *sinceDB) disk() error {
     return err
 }
 
-func (r *sinceDB) Sender(e event.Event, batch bool) error {
+func (r *sinceDB) Sender(e event.Event) error {
+    batch := true
 	if batch {
+	    /*
         events := adapter.ToEvents(e)
         for _, event := range events.Batch() {
         	if err := r.update(event); err != nil {
         	    return err
             }
         }
+	    */
 
     } else {
         if err := r.update(e); err != nil {

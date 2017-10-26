@@ -10,8 +10,6 @@ import (
 
 )
 
-const Namespace = "plugin.pipeline.channel"
-
 type channel struct {
     log.Log
     channel chan event.Event
