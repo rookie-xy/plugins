@@ -1,6 +1,7 @@
 package yaml
 
 import (
+	//"fmt"
     "gopkg.in/yaml.v2"
     "github.com/rookie-xy/hubble/codec"
     "github.com/rookie-xy/hubble/types"
@@ -29,6 +30,7 @@ func (r *Yaml) Encode(in types.Object) (types.Object, error) {
 }
 
 func (r *Yaml) Decode(in []byte, atEOF bool) (int, []byte, error) {
+    /*
     var out interface{}
 
     if e := yaml.Unmarshal(in, &out); e != nil {
@@ -36,6 +38,19 @@ func (r *Yaml) Decode(in []byte, atEOF bool) (int, []byte, error) {
     }
 
     return 0, out.([]byte), nil
+    */
+
+    return 0, nil, nil
+}
+
+func (r *Yaml) ValueDecode(in []byte, atEOF bool) (int, types.Object, error) {
+    var out interface{}
+
+    if e := yaml.Unmarshal(in, &out); e != nil {
+        return 0, nil, e
+    }
+
+    return 0, out, nil
 }
 
 func init() {

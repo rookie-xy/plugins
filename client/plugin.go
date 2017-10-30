@@ -13,7 +13,7 @@ import (
   _ "github.com/rookie-xy/plugins/client/kafka"
   _ "github.com/rookie-xy/plugins/client/logstash"
   _ "github.com/rookie-xy/plugins/client/redis"
-  _ "github.com/rookie-xy/plugins/client/sincedb"
+  _ "github.com/rookie-xy/plugins/client/sinceDB"
 )
 
 type clientPlugin struct {
