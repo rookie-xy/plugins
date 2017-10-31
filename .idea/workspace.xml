@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0efcb374-4e58-49fe-aeeb-9659860bb729" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/codec/constants.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/input/constants.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/sinceDB/sinceDB.go" afterPath="$PROJECT_DIR$/client/sinceDB/sinceDB.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codec/byte/constants.go" afterPath="$PROJECT_DIR$/codec/byte/constants.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codec/json/constants.go" afterPath="$PROJECT_DIR$/codec/json/constants.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codec/line/constants.go" afterPath="$PROJECT_DIR$/codec/line/constants.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codec/multiline/constants.go" afterPath="$PROJECT_DIR$/codec/multiline/constants.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codec/plugin.go" afterPath="$PROJECT_DIR$/codec/plugin.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codec/rune/constants.go" afterPath="$PROJECT_DIR$/codec/rune/constants.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codec/word/constants.go" afterPath="$PROJECT_DIR$/codec/word/constants.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codec/yaml/constants.go" afterPath="$PROJECT_DIR$/codec/yaml/constants.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/input/log/constants.go" afterPath="$PROJECT_DIR$/input/log/constants.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/input/plugin.go" afterPath="$PROJECT_DIR$/input/plugin.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/elasticsearch/elasticsearch.go" afterPath="$PROJECT_DIR$/output/elasticsearch/elasticsearch.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pipeline/channel/channel.go" afterPath="$PROJECT_DIR$/pipeline/channel/channel.go" />
-    </list>
+    <list default="true" id="0efcb374-4e58-49fe-aeeb-9659860bb729" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,7 +47,7 @@
         <entry file="file://$PROJECT_DIR$/output/elasticsearch/elasticsearch.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
-              <caret line="41" column="35" lean-forward="true" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
+              <caret line="41" column="35" lean-forward="false" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -344,7 +327,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17294389" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -766,7 +748,7 @@
     <entry file="file://$PROJECT_DIR$/output/elasticsearch/elasticsearch.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
-          <caret line="41" column="35" lean-forward="true" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
+          <caret line="41" column="35" lean-forward="false" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
           <folding />
         </state>
       </provider>
