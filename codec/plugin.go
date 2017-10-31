@@ -16,8 +16,6 @@ import (
   _ "github.com/rookie-xy/plugins/codec/multiline"
 )
 
-const Namespace = "plugin.codec"
-
 type codecPlugin struct {
     name    string
     factory codec.Factory

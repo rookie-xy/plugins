@@ -10,8 +10,6 @@ import (
     "github.com/rookie-xy/hubble/input"
 )
 
-const Namespace = "plugin.input"
-
 type inputPlugin struct {
     name    string
     factory input.Factory

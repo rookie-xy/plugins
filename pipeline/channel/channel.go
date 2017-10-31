@@ -49,6 +49,14 @@ func (r *channel) Close() int {
     return state.Ok
 }
 
+func (r *channel) On() {
+    return
+}
+
+func (r *channel) Off() {
+    return
+}
+
 func init() {
     register.Pipeline(Namespace, open)
 }

@@ -29,13 +29,13 @@ func (r *sinceDB) Init() error {
     path := filepath.Dir(r.path)
     err := os.MkdirAll(path, 0750)
     if err != nil {
-        return fmt.Errorf("Failed to created registry file dir %s: %v", path, err)
+        return fmt.Errorf("Failed to created sinceDB file dir %s: %v", path, err)
     }
 
     fileInfo, err := os.Lstat(r.path)
     if os.IsNotExist(err) {
-        fmt.Printf("No registry file found under: %s. Creating a new registry file.", r.path)
-        return r.Sender(nil)
+        fmt.Printf("No sinceDB file found under: %s. Creating a new sinceDB file.", r.path)
+        return r.diskDump()
 	}
 
     if err != nil {
@@ -44,12 +44,12 @@ func (r *sinceDB) Init() error {
 
     if !fileInfo.Mode().IsRegular() {
         if fileInfo.IsDir() {
-            return fmt.Errorf("Registry file path must be a file. %s is a directory.", r.path)
+            return fmt.Errorf("SinceDB file path must be a file. %s is a directory.", r.path)
         }
-        return fmt.Errorf("Registry file path is not a regular file: %s", r.path)
+        return fmt.Errorf("SinceDB file path is not a regular file: %s", r.path)
     }
 
-	fmt.Printf("Registry file set to: %s", r.path)
+	fmt.Printf("SinceDB file set to: %s", r.path)
 
     return nil
 }
@@ -61,7 +61,7 @@ func (r *sinceDB) load() error {
     }
     defer f.Close()
 
-    fmt.Printf("Loading registrar data from %s", r.path)
+    fmt.Printf("Loading sinceDB data from %s\n", r.path)
 
     decoder := json.NewDecoder(f)
     values  := []types.Value{}
@@ -70,7 +70,7 @@ func (r *sinceDB) load() error {
     }
 
     r.values = reset(values)
-    fmt.Printf("States Loaded from registrar: %+v", len(r.values))
+    fmt.Printf("States Loaded from sinceDB: %+v\n", len(r.values))
 
 	return nil
 }
@@ -95,17 +95,23 @@ func rotate(path, temp string) error {
 }
 
 func open(l log.Log, v types.Value) (proxy.Forward, error) {
-    sincedb := &sinceDB{
+    sinceDB := &sinceDB{
         log: l,
     }
 
-    sincedb.Init()
+    if v != nil {
+        sinceDB.path = v.GetMap()["path"].(string)
+    }
 
-    if err := sincedb.load(); err != nil {
+    if err := sinceDB.Init(); err != nil {
+        return nil, err
+    }
+
+    if err := sinceDB.load(); err != nil {
     	return nil, fmt.Errorf("Error loading state: %v", err)
 	}
 
-    return sincedb, nil
+    return sinceDB, nil
 }
 
 func (r *sinceDB) ID(value types.Value) string {
@@ -127,8 +133,8 @@ func (s *sinceDB) update(e event.Event) error {
     return nil
 }
 
-func (r *sinceDB) disk() error {
-    fmt.Printf("registrar write registry file: %s", r.path)
+func (r *sinceDB) diskDump() error {
+    fmt.Printf("write sinceDB file: %s\n", r.path)
 
     temp := r.path + ".new"
     f, err := os.OpenFile(temp, os.O_RDWR|os.O_CREATE|os.O_TRUNC|os.O_SYNC, 0600)
@@ -147,7 +153,7 @@ func (r *sinceDB) disk() error {
     f.Close()
     err = rotate(r.path, temp)
 
-    fmt.Printf("registrar Registry file updated. %d states written.", len(r.values))
+    fmt.Printf("SinceDB file updated. %d states written.", len(r.values))
     return err
 }
 
@@ -178,18 +184,18 @@ func (r *sinceDB) Commit(e event.Event) bool {
     return true
 }
 
-func (r *sinceDB) Senders() error {
+func (r *sinceDB) Senders() ([]event.Event, error) {
     for _, event := range r.events {
         if err := r.Sender(event); err != nil {
-            return err
+            return r.events, err
         }
     }
 
-    if err := r.disk(); err != nil {
-        return err
+    if err := r.diskDump(); err != nil {
+        return r.events, err
     }
 
-    return nil
+    return nil, nil
 }
 
 func (r *sinceDB) Get() []types.Value {

@@ -11,6 +11,8 @@ import (
     "github.com/rookie-xy/hubble/factory"
     "github.com/rookie-xy/hubble/pipeline"
     "github.com/rookie-xy/hubble/output"
+    "github.com/rookie-xy/hubble/plugin"
+    "github.com/rookie-xy/hubble/adapter"
 )
 
 type elasticsearch struct {
@@ -23,25 +25,28 @@ func open(l log.Log, v types.Value) (output.Output, error) {
         log: l,
     }
 
-    plugin := pipeline.Plugin
+    pluginName := plugin.Flag + "." + pipeline.Name + "." + pipeline.Plugin
 
     if value := v.GetMap(); value != nil {
         for key, _ := range value {
             key := key.(string)
             if n := strings.Index(key, "."); n > -1 {
                 if key[0:n] == pipeline.Name {
-                    plugin = key[n+1 : len(key)]
+                    //plugin = key[n+1 : len(key)]
+                    pluginName = plugin.Flag + "." + key
                 }
             }
         }
     }
 
-    if pipeline, err := factory.Pipeline(plugin, l, v); err != nil {
+    if pipeline, err := factory.Pipeline(pluginName, l, v); err != nil {
+        return nil, err
+    } else {
         elasticsearch.pipeline = pipeline
     }
 
     if queue := factory.Queue(Name); queue != nil {
-        if err := queue.Enqueue(elasticsearch.pipeline.(event.Event)); err != nil {
+        if err := queue.Enqueue(adapter.Pipeline2Event(elasticsearch.pipeline)); err != nil {
             return nil, err
         }
     }
