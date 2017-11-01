@@ -7,6 +7,7 @@ import (
     "github.com/rookie-xy/hubble/log"
     "github.com/rookie-xy/hubble/codec"
     "github.com/rookie-xy/hubble/register"
+    "fmt"
 )
 
 type Multiline struct {
@@ -34,6 +35,7 @@ func (m *Multiline) Encode(in types.Object) (types.Object, error) {
 // The last non-empty line of input will be returned even if it has no
 // newline.
 func (m *Multiline) Decode(data []byte, atEOF bool) (int, []byte, error) {
+        fmt.Println("decode Multilineeeeeeeeeeeeeeeeeee")
     if atEOF && len(data) == 0 {
         return 0, nil, nil
     }
