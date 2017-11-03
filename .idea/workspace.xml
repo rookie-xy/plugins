@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0efcb374-4e58-49fe-aeeb-9659860bb729" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/codec/line/line.go" afterPath="$PROJECT_DIR$/codec/line/line.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/input/log/log.go" afterPath="$PROJECT_DIR$/input/log/log.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/elasticsearch/elasticsearch.go" afterPath="$PROJECT_DIR$/client/elasticsearch/elasticsearch.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,16 +14,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="factory.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../hubble/factory/factory.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="103" column="5" lean-forward="false" selection-start-line="103" selection-start-column="5" selection-end-line="103" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="elasticsearch.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/output/elasticsearch/elasticsearch.go">
           <provider selected="true" editor-type-id="text-editor">
@@ -65,16 +54,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="constants.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/sinceDB/constants.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="9" column="56" lean-forward="false" selection-start-line="9" selection-start-column="56" selection-end-line="9" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="sincedb.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/output/sincedb/sincedb.go">
           <provider selected="true" editor-type-id="text-editor">
@@ -85,11 +64,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="line.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="line.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/codec/line/line.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="324">
               <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="elasticsearch.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/elasticsearch/elasticsearch.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="26" column="86" lean-forward="false" selection-start-line="26" selection-start-column="86" selection-end-line="26" selection-end-column="86" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="channel.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pipeline/channel/channel.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="37" column="38" lean-forward="false" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -131,7 +130,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/codec/rune/rune.go" />
         <option value="$PROJECT_DIR$/codec/word/word.go" />
         <option value="$PROJECT_DIR$/source/plugin.go" />
         <option value="$PROJECT_DIR$/source/log/file.go" />
@@ -175,13 +173,14 @@
         <option value="$PROJECT_DIR$/input/log/constants.go" />
         <option value="$PROJECT_DIR$/../hubble/adapter/event.go" />
         <option value="$PROJECT_DIR$/output/elasticsearch/elasticsearch.go" />
-        <option value="$PROJECT_DIR$/pipeline/channel/channel.go" />
         <option value="$PROJECT_DIR$/filter/grok/grok.go" />
         <option value="$PROJECT_DIR$/filter/constants.go" />
         <option value="$PROJECT_DIR$/filter/plugin.go" />
         <option value="$PROJECT_DIR$/codec/multiline/multiline.go" />
         <option value="$PROJECT_DIR$/input/log/log.go" />
         <option value="$PROJECT_DIR$/codec/line/line.go" />
+        <option value="$PROJECT_DIR$/pipeline/channel/channel.go" />
+        <option value="$PROJECT_DIR$/client/elasticsearch/elasticsearch.go" />
       </list>
     </option>
   </component>
@@ -273,52 +272,18 @@
               <item name="plugins" type="b2602c69:ProjectViewProjectNode" />
               <item name="plugins" type="462c0819:PsiDirectoryNode" />
               <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="sinceDB" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="plugins" type="b2602c69:ProjectViewProjectNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="codec" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="plugins" type="b2602c69:ProjectViewProjectNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="codec" type="462c0819:PsiDirectoryNode" />
-              <item name="line" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="plugins" type="b2602c69:ProjectViewProjectNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="codec" type="462c0819:PsiDirectoryNode" />
-              <item name="multiline" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="plugins" type="b2602c69:ProjectViewProjectNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="input" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="plugins" type="b2602c69:ProjectViewProjectNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="input" type="462c0819:PsiDirectoryNode" />
-              <item name="log" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="plugins" type="b2602c69:ProjectViewProjectNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="output" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="plugins" type="b2602c69:ProjectViewProjectNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="output" type="462c0819:PsiDirectoryNode" />
               <item name="elasticsearch" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="plugins" type="b2602c69:ProjectViewProjectNode" />
               <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="output" type="462c0819:PsiDirectoryNode" />
-              <item name="sincedb" type="462c0819:PsiDirectoryNode" />
+              <item name="pipeline" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="plugins" type="b2602c69:ProjectViewProjectNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="pipeline" type="462c0819:PsiDirectoryNode" />
+              <item name="channel" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -393,7 +358,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///usr/local/go/src/strings/strings_amd64.go" />
     <entry file="file://$PROJECT_DIR$/../hubble/register/client.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -643,14 +607,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pipeline/channel/channel.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="56" column="9" lean-forward="false" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/filter/grok/grok.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -759,6 +715,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
           <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pipeline/channel/channel.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="37" column="38" lean-forward="false" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/elasticsearch/elasticsearch.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="26" column="86" lean-forward="false" selection-start-line="26" selection-start-column="86" selection-end-line="26" selection-end-column="86" />
           <folding />
         </state>
       </provider>
