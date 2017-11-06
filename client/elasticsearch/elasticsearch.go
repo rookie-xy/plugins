@@ -7,6 +7,7 @@ import (
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/proxy"
     "github.com/rookie-xy/hubble/types"
+    "github.com/rookie-xy/hubble/adapter"
     "fmt"
 )
 
@@ -17,14 +18,14 @@ type elasticsearch struct {
 }
 
 func open(l log.Log, v types.Value) (proxy.Forward, error) {
-    fmt.Println("iniiiiiiiiiiiiiiiiiiiiiiiiiiielasticsearch")
     return &elasticsearch{
         Log: l,
     }, nil
 }
 
 func (r *elasticsearch) Sender(e event.Event) error {
-    fmt.Println("elasticsearchhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    body := adapter.ToFileEvent(e).GetBody()
+    fmt.Println("workerrrrrrrrrrrrrrrrrrrrrrrrrrrr ", string(body.GetContent()))
     return nil
 }
 

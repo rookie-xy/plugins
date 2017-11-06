@@ -158,8 +158,10 @@ func (r *sinceDB) diskDump() error {
 }
 
 func (r *sinceDB) Sender(e event.Event) error {
+	fmt.Println("sincedb senderrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
     batch := true
 	if batch {
+
 	    /*
         events := adapter.ToEvents(e)
         for _, event := range events.Batch() {
