@@ -14,13 +14,13 @@ import (
     "github.com/rookie-xy/hubble/proxy"
     "github.com/rookie-xy/hubble/paths"
 //    "github.com/rookie-xy/hubble/adapter"
+    "github.com/rookie-xy/hubble/adapter"
 )
 
 type sinceDB struct {
     log     log.Log
     path    string
-    values  []types.Value
-    events  []event.Event
+    states  []adapter.FileState
 }
 
 func (r *sinceDB) Init() error {
@@ -64,25 +64,26 @@ func (r *sinceDB) load() error {
     fmt.Printf("Loading sinceDB data from %s\n", r.path)
 
     decoder := json.NewDecoder(f)
-    values  := []types.Value{}
-    if err = decoder.Decode(&values); err != nil {
+    states  := []state.State{}
+    if err = decoder.Decode(&states); err != nil {
         return fmt.Errorf("Error decoding states: %s", err)
     }
 
-    r.values = reset(values)
-    fmt.Printf("States Loaded from sinceDB: %+v\n", len(r.values))
+    r.states = reset(states)
+    fmt.Printf("States Loaded from sinceDB: %+v\n", len(r.states))
 
 	return nil
 }
 
-func reset(values []types.Value) []types.Value {
-    for key, value := range values {
+func reset(states []state.State) []state.State {
+    for index, state := range states {
+        state.On()
+        states[index] = state
 //        state.Finished = true
 //        state.TTL = -2
-        values[key] = value
     }
 
-    return values
+    return states
 }
 
 func rotate(path, temp string) error {
@@ -119,7 +120,7 @@ func (r *sinceDB) ID(value types.Value) string {
     return fmt.Sprintf("%d-%d", file["inode"], file["device"])
 }
 
-func (s *sinceDB) update(e event.Event) error {
+func (s *sinceDB) update(state state.State) error {
 	/*
     for _, value := range s.values {
     	if s.ID(value) != e.ID() {
@@ -144,7 +145,7 @@ func (r *sinceDB) diskDump() error {
     }
 
     encoder := json.NewEncoder(f)
-    if err = encoder.Encode(r.values); err != nil {
+    if err = encoder.Encode(r.states); err != nil {
         f.Close()
         fmt.Printf("Error when encoding the states: %s", err)
         return err
@@ -153,7 +154,7 @@ func (r *sinceDB) diskDump() error {
     f.Close()
     err = rotate(r.path, temp)
 
-    fmt.Printf("SinceDB file updated. %d states written.", len(r.values))
+    fmt.Printf("SinceDB file updated. %d states written.", len(r.states))
     return err
 }
 
@@ -177,31 +178,38 @@ func (r *sinceDB) Sender(e event.Event) error {
         }
     }
 
-
     return nil
 }
 
 func (r *sinceDB) Commit(e event.Event) bool {
-    r.events = append(r.events, e)
-    return true
+    if e != nil {
+        r.states = append(r.states, adapter.ToFileState(e))
+        return true
+    }
+
+    return false
 }
 
 func (r *sinceDB) Senders() ([]event.Event, error) {
-    for _, event := range r.events {
-        if err := r.Sender(event); err != nil {
-            return r.events, err
+	var events []event.Event
+
+    for _, state := range r.states {
+        events = append(events, state.(event.Event))
+
+        if err := r.update(state); err != nil {
+            return events, err
         }
     }
 
     if err := r.diskDump(); err != nil {
-        return r.events, err
+        return events, err
     }
 
     return nil, nil
 }
 
-func (r *sinceDB) Get() []types.Value {
-    return r.values
+func (r *sinceDB) Get() []adapter.FileState {
+    return r.states
 }
 
 func (r *sinceDB) Close() int {
