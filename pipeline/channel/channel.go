@@ -35,10 +35,10 @@ func (r *channel) Enqueue(e event.Event) error {
 func (r *channel) Dequeue(size int) (event.Event, error) {
     event, open := <- r.channel
     if !open {
-        return nil/*, state.Done*/, nil
+        return nil/*, models.Done*/, nil
     }
 
-    return event, /*state.Ok*/ nil
+    return event, /*models.Ok*/ nil
 }
 
 func (r *channel) Requeue(e event.Event) error {

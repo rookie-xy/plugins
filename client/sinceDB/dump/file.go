@@ -7,14 +7,10 @@ import (
 
     "github.com/rookie-xy/plugins/client/sinceDB/models"
     "github.com/rookie-xy/plugins/client/sinceDB/utils"
+    "github.com/rookie-xy/hubble/models/file"
 )
 
-const (
-    flag  = os.O_RDWR|os.O_CREATE|os.O_TRUNC|os.O_SYNC
-    model = 0600
-)
-
-func File(path string, states models.States) error {
+func File(path string, states *file.States) error {
     fmt.Printf("write states to file: %s\n", path)
 
     temp := path + ".new"
@@ -37,4 +33,3 @@ func File(path string, states models.States) error {
     fmt.Printf("SinceDB file updated. %d states written.", len(r.states))
     return err
 }
-

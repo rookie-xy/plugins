@@ -2,7 +2,7 @@ package redis
 /*
 import (
     "github.com/rookie-xy/hubble/event"
-    "github.com/rookie-xy/hubble/state"
+    "github.com/rookie-xy/hubble/models"
     "github.com/rookie-xy/hubble/log"
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/types"
@@ -23,11 +23,11 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
 
 
 func (r *redis) Sender(e event.Event) int {
-    return state.Ok
+    return models.Ok
 }
 
 func (r *redis) Close() int {
-    return state.Ok
+    return models.Ok
 }
 
 func init() {

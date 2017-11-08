@@ -98,7 +98,7 @@ func (f *Log) Read(buf []byte) (int, error) {
 // errorChecks checks how the given error should be handled based on the config options
 func (f *Log) errorChecks(err error) error {
 	if err != io.EOF {
-		//logp.Err("Unexpected state reading from %s; error: %s", f.fs.Name(), err)
+		//logp.Err("Unexpected models reading from %s; error: %s", f.fs.Name(), err)
 		return err
 	}
 

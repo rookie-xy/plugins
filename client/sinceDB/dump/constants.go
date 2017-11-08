@@ -1,11 +1,8 @@
-package sinceDB
+package dump
 
-import (
-	"github.com/rookie-xy/hubble/plugin"
-	"github.com/rookie-xy/hubble/proxy"
-)
+import "os"
 
 const (
-	Name = "sinceDB"
-	Namespace = plugin.Flag + "." + proxy.Name + "." + Name
+    flag  = os.O_RDWR|os.O_CREATE|os.O_TRUNC|os.O_SYNC
+    model = 0600
 )
