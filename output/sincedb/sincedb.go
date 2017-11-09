@@ -11,6 +11,7 @@ import (
     "github.com/rookie-xy/hubble/adapter"
     "github.com/rookie-xy/hubble/output"
     "github.com/rookie-xy/hubble/plugin"
+    "github.com/rookie-xy/hubble/models/file"
 )
 
 type sinceDB struct {
@@ -44,12 +45,8 @@ func (s *sinceDB) Sender(e event.Event) error {
     return nil
 }
 
-func (s *sinceDB) Add() int {
-    return s.Add()
-}
-
-func (s *sinceDB) Find() types.Object {
-    return s.Find()
+func (s *sinceDB) Load() []file.State {
+    return s.SinceDB.Load()
 }
 
 func (s *sinceDB) Close() int {

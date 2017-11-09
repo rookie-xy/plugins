@@ -32,7 +32,6 @@ func open(l log.Log, v types.Value) (output.Output, error) {
             key := key.(string)
             if n := strings.Index(key, "."); n > -1 {
                 if key[0:n] == pipeline.Name {
-                    //plugin = key[n+1 : len(key)]
                     pluginName = plugin.Flag + "." + key
                 }
             }

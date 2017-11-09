@@ -1,10 +1,7 @@
 package sinceDB
 
 import (
-    "os"
     "fmt"
-    "encoding/json"
-    "path/filepath"
 
     "github.com/rookie-xy/hubble/log"
     "github.com/rookie-xy/hubble/types"
@@ -12,14 +9,11 @@ import (
     "github.com/rookie-xy/hubble/state"
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/proxy"
-    "github.com/rookie-xy/hubble/paths"
-//    "github.com/rookie-xy/hubble/adapter"
-    "github.com/rookie-xy/hubble/adapter"
-    "github.com/rookie-xy/plugins/client/sinceDB/models"
     "github.com/rookie-xy/plugins/client/sinceDB/dump"
     "github.com/rookie-xy/plugins/client/sinceDB/setup"
     "github.com/rookie-xy/plugins/client/sinceDB/states"
     "github.com/rookie-xy/hubble/models/file"
+    "github.com/rookie-xy/hubble/adapter"
 )
 
 type sinceDB struct {
@@ -35,16 +29,20 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
         states: file.News(),
     }
 
-    if path, err := setup.Init(v); err != nil {
+    if v == nil {
+        return nil, fmt.Errorf("Error value is nil")
+    }
+
+    if path, err := setup.Init(v, sinceDB.states); err != nil {
         return nil, err
 
     } else {
     	sinceDB.path = path
 
         if states, err := states.Load(path); err != nil {
-            return nil, fmt.Errorf("Error loading models: %v", err)
+            return nil, fmt.Errorf("Error loading states: %v", err)
 	    } else {
-	        sinceDB.states.SetStates(states)
+	        sinceDB.states.Set(states)
         }
     }
 
@@ -52,9 +50,8 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
 }
 
 func (r *sinceDB) Sender(e event.Event) error {
-    if err := r.states.Update(e); err != nil {
-        return err
-    }
+	fileEvent := adapter.ToFileEvent(e)
+    r.states.Update(fileEvent.GetState())
 
     if err := dump.File(r.path, r.states); err != nil {
         return err
@@ -65,6 +62,10 @@ func (r *sinceDB) Sender(e event.Event) error {
 
 func (r *sinceDB) Commit(e event.Event) bool {
     if e != nil {
+        if len(r.events) > 2 {
+            return false
+        }
+
         r.events = append(r.events, e)
         return true
     }
@@ -73,11 +74,9 @@ func (r *sinceDB) Commit(e event.Event) bool {
 }
 
 func (r *sinceDB) Senders() ([]event.Event, error) {
-    for index, event := range r.events {
-        if err := r.states.Update(event.Getstate()); err != nil {
-            r.events = r.events[index:]
-            return r.events, err
-        }
+    for _, event := range r.events {
+    	fileEvent := adapter.ToFileEvent(event)
+    	r.states.Update(fileEvent.GetState())
     }
 
     if err := dump.File(r.path, r.states); err != nil {

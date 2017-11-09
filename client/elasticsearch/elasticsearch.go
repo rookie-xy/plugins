@@ -24,8 +24,10 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
 }
 
 func (r *elasticsearch) Sender(e event.Event) error {
-    body := adapter.ToFileEvent(e).GetBody()
-    fmt.Println("workerrrrrrrrrrrrrrrrrrrrrrrrrrrr ", string(body.GetContent()))
+    fileEvent := adapter.ToFileEvent(e)
+    state := fileEvent.GetState()
+    //body := adapter.ToFileEvent(e).GetBody()
+    fmt.Println("elasticsearchhhhhhhhhhhhhhhhhhhhh ", state.Offset)
     return nil
 }
 

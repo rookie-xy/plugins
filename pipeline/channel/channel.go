@@ -49,8 +49,8 @@ func (r *channel) Close() int {
     return state.Ok
 }
 
-func (r *channel) On() {
-    return
+func (r *channel) On() bool {
+    return true
 }
 
 func (r *channel) Off() {

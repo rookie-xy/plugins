@@ -5,7 +5,6 @@ import (
 	"os"
 	"encoding/json"
 
-    "github.com/rookie-xy/plugins/client/sinceDB/models"
     "github.com/rookie-xy/plugins/client/sinceDB/utils"
     "github.com/rookie-xy/hubble/models/file"
 )
@@ -20,8 +19,9 @@ func File(path string, states *file.States) error {
         return err
     }
 
+    this := states.Get()
     encoder := json.NewEncoder(f)
-    if err = encoder.Encode(states); err != nil {
+    if err = encoder.Encode(this); err != nil {
         f.Close()
         fmt.Printf("Error when encoding the states: %s", err)
         return err
@@ -30,6 +30,6 @@ func File(path string, states *file.States) error {
     f.Close()
     err = utils.Rotate(path, temp)
 
-    fmt.Printf("SinceDB file updated. %d states written.", len(r.states))
+    fmt.Printf("SinceDB file updated. %d states written.", len(this))
     return err
 }
