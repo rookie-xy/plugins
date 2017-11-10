@@ -8,12 +8,13 @@ import (
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/proxy"
 
-  _ "github.com/rookie-xy/plugins/client/console"
-  _ "github.com/rookie-xy/plugins/client/elasticsearch"
-  _ "github.com/rookie-xy/plugins/client/kafka"
-  _ "github.com/rookie-xy/plugins/client/logstash"
+  _ "github.com/rookie-xy/plugins/client/file"
   _ "github.com/rookie-xy/plugins/client/redis"
+  _ "github.com/rookie-xy/plugins/client/kafka"
   _ "github.com/rookie-xy/plugins/client/sinceDB"
+  _ "github.com/rookie-xy/plugins/client/console"
+  _ "github.com/rookie-xy/plugins/client/logstash"
+  _ "github.com/rookie-xy/plugins/client/elasticsearch"
 )
 
 type clientPlugin struct {

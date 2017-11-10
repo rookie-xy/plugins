@@ -1,4 +1,4 @@
-package console
+package file
 
 import (
     "fmt"
@@ -11,25 +11,25 @@ import (
     "github.com/rookie-xy/hubble/register"
 )
 
-type console struct {
+type file struct {
     log.Log
 }
 
 func open(l log.Log, v types.Value) (proxy.Forward, error) {
-    return &console{
+    return &file{
         Log: l,
     }, nil
 }
 
-func (c *console) Sender(e event.Event) error {
+func (f *file) Sender(e event.Event) error {
     fileEvent := adapter.ToFileEvent(e)
     state := fileEvent.GetState()
     body := adapter.ToFileEvent(e).GetBody()
-    fmt.Printf("consoleeeeeeeeeeeeeeeeeeeeeeeeeeee: %d#%s\n ", state.Offset, string(body.GetContent()))
+    fmt.Printf("fileeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: %d#%s\n ", state.Offset, string(body.GetContent()))
     return nil
 }
 
-func (c *console) Close() {
+func (f *file) Close() {
 }
 
 func init() {

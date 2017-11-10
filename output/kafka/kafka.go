@@ -1,4 +1,4 @@
-package elasticsearch
+package kafka
 
 import (
     "strings"
@@ -14,13 +14,13 @@ import (
     "github.com/rookie-xy/hubble/adapter"
 )
 
-type elasticsearch struct {
+type kafka struct {
     log       log.Log
     pipeline  pipeline.Queue
 }
 
 func open(l log.Log, v types.Value) (output.Output, error) {
-    elasticsearch := &elasticsearch{
+    kafka := &kafka{
         log: l,
     }
 
@@ -40,24 +40,24 @@ func open(l log.Log, v types.Value) (output.Output, error) {
     if pipeline, err := factory.Pipeline(pluginName, l, v); err != nil {
         return nil, err
     } else {
-        elasticsearch.pipeline = pipeline
+        kafka.pipeline = pipeline
     }
 
     if queue := factory.Queue(Name); queue != nil {
-        if err := queue.Enqueue(adapter.Pipeline2Event(elasticsearch.pipeline)); err != nil {
+        if err := queue.Enqueue(adapter.Pipeline2Event(kafka.pipeline)); err != nil {
             return nil, err
         }
     }
 
-    return elasticsearch, nil
+    return kafka, nil
 }
 
-func (r *elasticsearch) Sender(e event.Event) error {
-    r.pipeline.Enqueue(e)
+func (k *kafka) Sender(e event.Event) error {
+    k.pipeline.Enqueue(e)
     return nil
 }
 
-func (r *elasticsearch) Close() {
+func (k *kafka) Close() {
 }
 
 func init() {

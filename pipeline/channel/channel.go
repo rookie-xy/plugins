@@ -2,7 +2,6 @@ package channel
 
 import (
     "github.com/rookie-xy/hubble/event"
-    "github.com/rookie-xy/hubble/state"
     "github.com/rookie-xy/hubble/log"
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/pipeline"
@@ -46,7 +45,7 @@ func (r *channel) Requeue(e event.Event) error {
 }
 
 func (r *channel) Close() int {
-    return state.Ok
+    return -1
 }
 
 func (r *channel) On() bool {

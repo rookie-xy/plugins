@@ -6,7 +6,6 @@ import (
     "github.com/rookie-xy/hubble/log"
     "github.com/rookie-xy/hubble/types"
     "github.com/rookie-xy/hubble/event"
-    "github.com/rookie-xy/hubble/state"
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/proxy"
     "github.com/rookie-xy/plugins/client/sinceDB/dump"
@@ -90,8 +89,7 @@ func (r *sinceDB) Load() []file.State {
     return r.states.States
 }
 
-func (r *sinceDB) Close() int {
-    return state.Ok
+func (r *sinceDB) Close() {
 }
 
 func init() {

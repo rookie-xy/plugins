@@ -8,6 +8,7 @@ import (
     "github.com/rookie-xy/hubble/register"
     "github.com/rookie-xy/hubble/proxy"
 
+  _ "github.com/rookie-xy/plugins/output/kafka"
   _ "github.com/rookie-xy/plugins/output/elasticsearch"
   _ "github.com/rookie-xy/plugins/output/sincedb"
 )

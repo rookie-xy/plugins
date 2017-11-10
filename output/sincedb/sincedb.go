@@ -2,7 +2,6 @@ package sinceDB
 
 import (
     "github.com/rookie-xy/hubble/event"
-    "github.com/rookie-xy/hubble/state"
     "github.com/rookie-xy/hubble/log"
     "github.com/rookie-xy/hubble/types"
     "github.com/rookie-xy/hubble/factory"
@@ -49,8 +48,7 @@ func (s *sinceDB) Load() []file.State {
     return s.SinceDB.Load()
 }
 
-func (s *sinceDB) Close() int {
-    return state.Ok
+func (s *sinceDB) Close() {
 }
 
 func init() {
