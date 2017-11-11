@@ -7,17 +7,33 @@ import (
     "github.com/rookie-xy/hubble/pipeline"
     "github.com/rookie-xy/hubble/types"
 
+    "time"
+    "go/ast"
+    "github.com/rookie-xy/plugins/pipeline/channel/configure"
 )
 
 type channel struct {
     log.Log
-    channel chan event.Event
+
+    channel   chan event.Event
+    timer    *time.Ticker
 }
 
 func open(l log.Log, v types.Value) (pipeline.Queue, error) {
+	configure :=  configure.New(l)
+	if err := configure.Init(v); err != nil {
+	    return nil, err
+    }
+
+    duration, err := time.ParseDuration(configure.Duration)
+    if err != nil {
+        return nil, err
+    }
+
     return &channel{
         Log: l,
-        channel: make(chan event.Event, 1024),
+        channel: make(chan event.Event, configure.Max),
+        timer: time.NewTicker(duration),
     }, nil
 }
 
@@ -31,13 +47,50 @@ func (r *channel) Enqueue(e event.Event) error {
     return nil
 }
 
-func (r *channel) Dequeue(size int) (event.Event, error) {
-    event, open := <- r.channel
-    if !open {
-        return nil/*, models.Done*/, nil
+func (r *channel) Dequeue() (event.Event, error) {
+    event, closed := <- r.channel
+    if closed {
+        return event, pipeline.ErrClosed
     }
 
-    return event, /*models.Ok*/ nil
+    return event, nil
+}
+
+func (c *channel) Dequeues(size int) ([]event.Event, error) {
+    var events []event.Event
+
+    count := 0
+    for {
+        select {
+
+        case event, closed := <-c.channel:
+        	if closed {
+        		if count > 0 {
+                    return events, pipeline.ErrClosed
+                }
+
+                return nil, pipeline.ErrClosed
+            }
+
+        	events = append(events, event)
+            count++
+
+            if count < size {
+                continue
+            }
+
+            return events, nil
+
+        case c.timer.C:
+        	if count > 0 {
+                return events, pipeline.ErrEmpty
+            }
+
+            return nil, pipeline.ErrEmpty
+        }
+    }
+
+    return nil, nil
 }
 
 func (r *channel) Requeue(e event.Event) error {

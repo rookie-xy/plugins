@@ -22,7 +22,7 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
 
 func (e *kafka) Sender(event event.Event) error {
     fileEvent := adapter.ToFileEvent(event)
-    state := fileEvent.GetState()
+    state := fileEvent.GetFooter()
     body := adapter.ToFileEvent(event).GetBody()
     fmt.Printf("kafkaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: %d#%s\n ", state.Offset, string(body.GetContent()))
     return nil

@@ -23,7 +23,7 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
 
 func (c *console) Sender(e event.Event) error {
     fileEvent := adapter.ToFileEvent(e)
-    state := fileEvent.GetState()
+    state := fileEvent.GetFooter()
     body := adapter.ToFileEvent(e).GetBody()
     fmt.Printf("consoleeeeeeeeeeeeeeeeeeeeeeeeeeee: %d#%s\n ", state.Offset, string(body.GetContent()))
     return nil
