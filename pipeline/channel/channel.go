@@ -8,7 +8,6 @@ import (
     "github.com/rookie-xy/hubble/types"
 
     "time"
-    "go/ast"
     "github.com/rookie-xy/plugins/pipeline/channel/configure"
 )
 
@@ -48,8 +47,8 @@ func (r *channel) Enqueue(e event.Event) error {
 }
 
 func (r *channel) Dequeue() (event.Event, error) {
-    event, closed := <- r.channel
-    if closed {
+    event, open := <- r.channel
+    if !open {
         return event, pipeline.ErrClosed
     }
 
@@ -63,8 +62,8 @@ func (c *channel) Dequeues(size int) ([]event.Event, error) {
     for {
         select {
 
-        case event, closed := <-c.channel:
-        	if closed {
+        case event, open := <-c.channel:
+        	if !open {
         		if count > 0 {
                     return events, pipeline.ErrClosed
                 }
@@ -81,7 +80,7 @@ func (c *channel) Dequeues(size int) ([]event.Event, error) {
 
             return events, nil
 
-        case c.timer.C:
+        case <- c.timer.C:
         	if count > 0 {
                 return events, pipeline.ErrEmpty
             }

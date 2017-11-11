@@ -13,7 +13,6 @@ import (
     "github.com/rookie-xy/plugins/client/sinceDB/states"
     "github.com/rookie-xy/hubble/models/file"
     "github.com/rookie-xy/hubble/adapter"
-    "github.com/rookie-xy/plugins/client/sinceDB/batch"
 )
 
 type sinceDB struct {
@@ -62,8 +61,10 @@ func (s *sinceDB) Sender(e event.Event) error {
 
 func (s *sinceDB) Senders(events []event.Event) error {
     for _, event := range events {
-    	fileEvent := adapter.ToFileEvent(event)
-    	s.states.Update(fileEvent.GetFooter())
+    	if event != nil {
+            fileEvent := adapter.ToFileEvent(event)
+            s.states.Update(fileEvent.GetFooter())
+        }
     }
 
     if err := dump.File(s.path, s.states); err != nil {

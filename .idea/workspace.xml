@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0efcb374-4e58-49fe-aeeb-9659860bb729" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/sinceDB/batch/batch.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pipeline/channel/configure/configure.go" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/client/sinceDB/setup/init.go" afterPath="$PROJECT_DIR$/client/sinceDB/path/init.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/console/console.go" afterPath="$PROJECT_DIR$/client/console/console.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/elasticsearch/elasticsearch.go" afterPath="$PROJECT_DIR$/client/elasticsearch/elasticsearch.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/file/file.go" afterPath="$PROJECT_DIR$/client/file/file.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/kafka/kafka.go" afterPath="$PROJECT_DIR$/client/kafka/kafka.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/sinceDB/sinceDB.go" afterPath="$PROJECT_DIR$/client/sinceDB/sinceDB.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pipeline/channel/channel.go" afterPath="$PROJECT_DIR$/pipeline/channel/channel.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pipeline/channel/configure/configure.go" afterPath="$PROJECT_DIR$/pipeline/channel/configure/configure.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,8 +30,18 @@
       <file leaf-file-name="channel.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pipeline/channel/channel.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="488">
-              <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+            <state relative-caret-position="144">
+              <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="constants.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pipeline/channel/constants.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -67,8 +70,8 @@
       <file leaf-file-name="configure.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pipeline/channel/configure/configure.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="25" column="14" lean-forward="false" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
+            <state relative-caret-position="380">
+              <caret line="23" column="18" lean-forward="false" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
               <folding>
                 <element signature="e#19#138#0" expanded="true" />
               </folding>
@@ -396,7 +399,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/client/sinceDB/models/state.go" />
     <entry file="file://$PROJECT_DIR$/../hubble/adapter/state.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -703,7 +705,7 @@
         <state relative-caret-position="324">
           <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
-            <element signature="e#14#250#0" expanded="true" />
+            <element signature="e#14#250#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -790,10 +792,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pipeline/channel/constants.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pipeline/channel/configure/configure.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="25" column="14" lean-forward="false" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
+        <state relative-caret-position="380">
+          <caret line="23" column="18" lean-forward="false" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
           <folding>
             <element signature="e#19#138#0" expanded="true" />
           </folding>
@@ -802,8 +812,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pipeline/channel/channel.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+        <state relative-caret-position="144">
+          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
           <folding />
         </state>
       </provider>

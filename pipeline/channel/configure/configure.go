@@ -17,7 +17,7 @@ func New(log log.Log) *Configure {
 	return &Configure{
         log: log,
         Max: 1024,
-        Duration: "10s",
+        Duration: "1s",
 	}
 }
 
