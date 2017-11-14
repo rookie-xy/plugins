@@ -55,7 +55,6 @@ func (l *Line) Decode(data []byte, atEOF bool) (int, []byte, error) {
     }
 
     if i := bytes.IndexByte(data, l.match); i >= 0 {
-
         // Out of bounds, throw out the line data
         if i > l.limit {
             fmt.Println("Out of bounds, throw out the line data")

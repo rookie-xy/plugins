@@ -9,6 +9,7 @@ import (
 	"github.com/rookie-xy/hubble/source"
 	"github.com/rookie-xy/hubble/register"
 	"github.com/rookie-xy/hubble/input"
+	"fmt"
 )
 
 // Log contains all log related data
@@ -91,6 +92,7 @@ func (f *Log) Read(buf []byte) (int, error) {
 		}
 
 		//logp.Debug("harvester", "End of file reached: %s; Backoff now.", f.fs.Name())
+		fmt.Printf("Collector End of file reached: %s; Backoff now.\n", f.source.Name())
 		f.wait()
 	}
 }
