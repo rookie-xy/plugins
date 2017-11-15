@@ -39,6 +39,14 @@ func New(l log.Log, v types.Value) (codec.Codec, error) {
     return line, nil
 }
 
+func (l *Line) Clone() types.Object {
+    return &Line{
+        log: l.log,
+        limit: l.limit,
+        match: l.match,
+    }
+}
+
 func (l *Line) Encode(in types.Object) (types.Object, error) {
     return nil, nil
 }
