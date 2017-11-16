@@ -58,6 +58,7 @@ func (k *kafka) Sender(e event.Event) error {
 }
 
 func (k *kafka) Close() {
+    k.pipeline.Close()
 }
 
 func init() {

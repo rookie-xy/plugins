@@ -37,17 +37,21 @@ func open(l log.Log, v types.Value) (pipeline.Queue, error) {
 }
 
 // TODO 确定如何保证并发
-func (r *channel) Clone() pipeline.Queue {
-    return r
+func (c *channel) Clone() pipeline.Queue {
+    return &channel{
+        Log: c.Log,
+        channel: c.channel,
+        timer: c.timer,
+    }
 }
 
-func (r *channel) Enqueue(e event.Event) error {
-    r.channel <- e
+func (c *channel) Enqueue(e event.Event) error {
+    c.channel <- e
     return nil
 }
 
-func (r *channel) Dequeue() (event.Event, error) {
-    event, open := <- r.channel
+func (c *channel) Dequeue() (event.Event, error) {
+    event, open := <- c.channel
     if !open {
         return event, pipeline.ErrClosed
     }
@@ -92,19 +96,20 @@ func (c *channel) Dequeues(size int) ([]event.Event, error) {
     return nil, nil
 }
 
-func (r *channel) Requeue(e event.Event) error {
-    return r.Enqueue(e)
+func (c *channel) Requeue(e event.Event) error {
+    return c.Enqueue(e)
 }
 
-func (r *channel) Close() int {
+func (c *channel) Close() int {
+    close(c.channel)
     return -1
 }
 
-func (r *channel) On() bool {
+func (c *channel) On() bool {
     return true
 }
 
-func (r *channel) Off() {
+func (c *channel) Off() {
     return
 }
 

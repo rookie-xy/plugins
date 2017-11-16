@@ -58,6 +58,7 @@ func (r *elasticsearch) Sender(e event.Event) error {
 }
 
 func (r *elasticsearch) Close() {
+    r.pipeline.Close()
 }
 
 func init() {
