@@ -1,9 +1,9 @@
-package log
+package utils
 
 import "os"
 
 // IsSameFile checks if the given File path corresponds with the FileInfo given
-func IsSameFile(path string, info os.FileInfo) bool {
+func SameFile(path string, info os.FileInfo) bool {
 	fileInfo, err := os.Stat(path)
 
 	if err != nil {

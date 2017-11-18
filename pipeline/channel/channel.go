@@ -37,7 +37,7 @@ func open(l log.Log, v types.Value) (pipeline.Queue, error) {
 }
 
 // TODO 确定如何保证并发
-func (c *channel) Clone() pipeline.Queue {
+func (c *channel) Clone() types.Object {
     return &channel{
         Log: c.Log,
         channel: c.channel,
