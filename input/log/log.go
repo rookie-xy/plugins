@@ -8,15 +8,15 @@ import (
 	"github.com/rookie-xy/hubble/types"
 	"github.com/rookie-xy/hubble/source"
 	"github.com/rookie-xy/hubble/register"
- .  "github.com/rookie-xy/hubble/input"
+   "github.com/rookie-xy/hubble/input"
     "fmt"
-	"github.com/rookie-xy/plugins/input/log/input"
+    "github.com/rookie-xy/plugins/input/log/configure"
 	"github.com/rookie-xy/plugins/input/log/utils"
 )
 
 // Log contains all log related data
 type Log struct {
-	input         *input.Input
+    configure     *configure.Configure
 	source         source.Source
 	offset         int64
 
@@ -27,20 +27,19 @@ type Log struct {
 }
 
 // New creates a new log instance to read log sources
-func New(l log.Log, v types.Value) (Input, error) {
+func New(l log.Log, v types.Value) (input.Input, error) {
 	log := &Log{
 		lastTimeRead: time.Now(),
 		log:          l,
 		done:         make(chan struct{}),
 	}
 
-	input  := input.New()
-    if err := input.Init(v); err != nil {
+	configure  := configure.New()
+    if err := configure.Init(v); err != nil {
     	return nil, err
 	}
 
-	log.input = input
-
+	log.configure = configure
 	return log, nil
 }
 
@@ -87,11 +86,11 @@ func (l *Log) Read(buf []byte) (int, error) {
 		}
 		totalN += n
 
-		// Read from input completed without error
+		// Read from configure completed without error
 		// Either end reached or buffer full
 		if err == nil {
 			// reset backoff for next read
-			l.backoff = l.input.Backoff.Min
+			l.backoff = l.configure.Backoff.Min
 			return totalN, nil
 		}
 
@@ -125,7 +124,7 @@ func (l *Log) errorChecks(err error) error {
 		return err
 	}
 
-	if err == io.EOF && l.input.EOF {
+	if err == io.EOF && l.configure.EOF {
 		return err
 	}
 
@@ -147,18 +146,18 @@ func (l *Log) errorChecks(err error) error {
 
 	// Check file wasn't read for longer then CloseInactive
 	age := time.Since(l.lastTimeRead)
-	if age > l.input.Inactive {
+	if age > l.configure.Inactive {
 		return source.ErrInactive
 	}
 
-	if l.input.Renamed {
+	if l.configure.Renamed {
 		// Check if the file can still be found under the same path
 		if !utils.SameFile(l.source.Name(), info) {
 			return source.ErrRenamed
 		}
 	}
 
-	if l.input.Removed {
+	if l.configure.Removed {
 		// Check if the file name exists. See https://github.com/elastic/filebeat/issues/93
 		_, statErr := os.Stat(l.source.Name())
 
@@ -180,7 +179,7 @@ func (l *Log) wait() {
 	}
 
 	// Increment backoff up to maxBackoff
-	if backoff := l.input.Backoff; l.backoff < backoff.Max {
+	if backoff := l.configure.Backoff; l.backoff < backoff.Max {
 		l.backoff = l.backoff * time.Duration(backoff.Factor)
 		if l.backoff > backoff.Max {
 			l.backoff = backoff.Max

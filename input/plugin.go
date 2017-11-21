@@ -23,7 +23,7 @@ func init() {
     plugin.Register(Namespace, func(ifc interface{}) (err error) {
         b, ok := ifc.(inputPlugin)
         if !ok {
-            return errors.New("plugin does not match input plugin type")
+            return errors.New("plugin does not match configure plugin type")
         }
 
         defer func() {

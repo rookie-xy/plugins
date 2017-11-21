@@ -55,7 +55,7 @@ func (l *Line) Encode(in types.Object) (types.Object, error) {
 // text, stripped of any trailing end-of-line marker. The returned line may
 // be empty. The end-of-line marker is one optional carriage return followed
 // by one mandatory newline. In regular expression notation, it is `\r?\n`.
-// The last non-empty line of input will be returned even if it has no
+// The last non-empty line of configure will be returned even if it has no
 // newline.
 func (l *Line) Decode(data []byte, atEOF bool) (int, []byte, error) {
     if atEOF && len(data) == 0 {

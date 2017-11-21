@@ -24,7 +24,7 @@ func (r *Rune) Encode(in types.Object) (types.Object, error) {
 
 // Rune decode is a split function for a Scanner that returns each
 // UTF-8-encoded rune as a token. The sequence of runes returned is
-// equivalent to that from a range loop over the input as a string, which
+// equivalent to that from a range loop over the configure as a string, which
 // means that erroneous UTF-8 encodings translate to U+FFFD = "\xef\xbf\xbd".
 // Because of the Scan interface, this makes it impossible for the client to
 // distinguish correctly encoded replacement runes from encoding errors.

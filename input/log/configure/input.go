@@ -1,4 +1,4 @@
-package input
+package configure
 
 import (
     "time"
@@ -6,7 +6,7 @@ import (
     "github.com/mitchellh/mapstructure"
 )
 
-type Input struct {
+type Configure struct {
     Inactive  time.Duration
     Timeout   time.Duration
 
@@ -17,8 +17,8 @@ type Input struct {
     Backoff   Backoff
 }
 
-func New() *Input {
-   return &Input {
+func New() *Configure {
+   return &Configure {
        Inactive: 3 * time.Second,
        Timeout: 10 * time.Second,
        Removed: false,
@@ -32,9 +32,9 @@ func New() *Input {
     }
 }
 
-func (i *Input) Init(v types.Value) error {
+func (c *Configure) Init(v types.Value) error {
     if values := v.GetMap(); values != nil {
-    	if err := mapstructure.Decode(values, i); err != nil {
+    	if err := mapstructure.Decode(values, c); err != nil {
     		return err
 		}
 	}
