@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0efcb374-4e58-49fe-aeeb-9659860bb729" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/codec/line/line.go" afterPath="$PROJECT_DIR$/codec/line/line.go" />
-      <change beforePath="$PROJECT_DIR$/codec/multiline/multiline.go" afterPath="$PROJECT_DIR$/codec/multiline/multiline.go" />
-      <change beforePath="$PROJECT_DIR$/codec/rune/rune.go" afterPath="$PROJECT_DIR$/codec/rune/rune.go" />
-      <change beforePath="$PROJECT_DIR$/input/log/input/backoff.go" afterPath="$PROJECT_DIR$/input/log/configure/backoff.go" />
-      <change beforePath="$PROJECT_DIR$/input/log/input/input.go" afterPath="$PROJECT_DIR$/input/log/configure/input.go" />
-      <change beforePath="$PROJECT_DIR$/input/log/log.go" afterPath="$PROJECT_DIR$/input/log/log.go" />
-      <change beforePath="$PROJECT_DIR$/input/plugin.go" afterPath="$PROJECT_DIR$/input/plugin.go" />
-    </list>
+    <list default="true" id="0efcb374-4e58-49fe-aeeb-9659860bb729" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -201,9 +192,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="23" />
+    <option name="x" value="65" />
+    <option name="y" value="24" />
     <option name="width" value="1280" />
-    <option name="height" value="716" />
+    <option name="height" value="714" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
