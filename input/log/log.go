@@ -90,7 +90,7 @@ func (l *Log) Read(buf []byte) (int, error) {
 		// Either end reached or buffer full
 		if err == nil {
 			// reset backoff for next read
-			l.backoff = l.configure.Backoff.Min
+			l.backoff = l.configure.Backoff.GetMin()
 			return totalN, nil
 		}
 
@@ -146,7 +146,7 @@ func (l *Log) errorChecks(err error) error {
 
 	// Check file wasn't read for longer then CloseInactive
 	age := time.Since(l.lastTimeRead)
-	if age > l.configure.Inactive {
+	if age > l.configure.GetInactive() {
 		return source.ErrInactive
 	}
 
@@ -179,10 +179,10 @@ func (l *Log) wait() {
 	}
 
 	// Increment backoff up to maxBackoff
-	if backoff := l.configure.Backoff; l.backoff < backoff.Max {
+	if backoff := l.configure.Backoff; l.backoff < backoff.GetMax() {
 		l.backoff = l.backoff * time.Duration(backoff.Factor)
-		if l.backoff > backoff.Max {
-			l.backoff = backoff.Max
+		if l.backoff > backoff.GetMax() {
+			l.backoff = backoff.GetMax()
 		}
 	}
 }

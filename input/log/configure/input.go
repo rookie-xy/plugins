@@ -7,8 +7,11 @@ import (
 )
 
 type Configure struct {
-    Inactive  time.Duration
-    Timeout   time.Duration
+    Inactive  string
+    Timeout   string
+
+    inactive  time.Duration
+    timeout   time.Duration
 
     Removed   bool
     Renamed   bool
@@ -19,14 +22,14 @@ type Configure struct {
 
 func New() *Configure {
    return &Configure {
-       Inactive: 3 * time.Second,
-       Timeout: 10 * time.Second,
+       inactive: 3 * time.Second,
+       timeout: 10 * time.Second,
        Removed: false,
        Renamed: false,
        EOF: false,
        Backoff: Backoff{
-           Min: 3 *  time.Second,
-           Max: 10 * time.Second,
+           min: 3 *  time.Second,
+           max: 10 * time.Second,
            Factor: 37,
        },
     }
@@ -39,5 +42,30 @@ func (c *Configure) Init(v types.Value) error {
 		}
 	}
 
+	var err error
+    if c.inactive, err = time.ParseDuration(c.Inactive); err != nil {
+		return err
+	}
+
+    if c.timeout, err = time.ParseDuration(c.Timeout); err != nil {
+		return err
+	}
+
+    if c.Backoff.max, err = time.ParseDuration(c.Backoff.Max); err != nil {
+		return err
+	}
+
+    if c.Backoff.min, err = time.ParseDuration(c.Backoff.Min); err != nil {
+		return err
+	}
+
 	return nil
+}
+
+func (c *Configure) GetInactive() time.Duration {
+    return c.inactive
+}
+
+func (c *Configure) GetTimeout() time.Duration {
+    return c.timeout
 }
