@@ -101,7 +101,10 @@ func (c *channel) Requeue(e event.Event) error {
 }
 
 func (c *channel) Close() int {
-    close(c.channel)
+    if c.channel != nil {
+        close(c.channel)
+    }
+
     return -1
 }
 
