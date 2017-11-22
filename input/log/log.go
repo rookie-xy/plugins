@@ -34,17 +34,19 @@ func New(l log.Log, v types.Value) (input.Input, error) {
 		done:         make(chan struct{}),
 	}
 
-	configure  := configure.New()
+	configure := configure.New()
     if err := configure.Init(v); err != nil {
     	return nil, err
 	}
 
 	log.configure = configure
+	log.backoff = configure.Backoff.GetMin()
 	return log, nil
 }
 
 func (l *Log) Clone() types.Object {
     return &Log{
+    	configure: l.configure,
     	lastTimeRead: time.Now(),
     	backoff: l.backoff,
     	log: l.log,
