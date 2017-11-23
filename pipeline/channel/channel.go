@@ -14,8 +14,11 @@ import (
 type channel struct {
     log.Log
 
-    channel   chan event.Event
-    timer    *time.Ticker
+    duration   time.Duration
+    timer     *time.Ticker
+
+    size       int
+    channel    chan event.Event
 }
 
 func open(l log.Log, v types.Value) (pipeline.Queue, error) {
@@ -32,7 +35,9 @@ func open(l log.Log, v types.Value) (pipeline.Queue, error) {
     return &channel{
         Log: l,
         channel: make(chan event.Event, configure.Max),
-        timer: time.NewTicker(duration),
+        timer:   time.NewTicker(duration),
+        size: configure.Max,
+        duration:duration,
     }, nil
 }
 
@@ -40,8 +45,8 @@ func open(l log.Log, v types.Value) (pipeline.Queue, error) {
 func (c *channel) Clone() types.Object {
     return &channel{
         Log: c.Log,
-        channel: c.channel,
-        timer: c.timer,
+        channel: make(chan event.Event, c.size),
+        timer: time.NewTicker(c.duration),
     }
 }
 
