@@ -12,6 +12,7 @@ import (
     "github.com/rookie-xy/hubble/output"
     "github.com/rookie-xy/hubble/plugin"
     "github.com/rookie-xy/hubble/adapter"
+    "fmt"
 )
 
 type elasticsearch struct {
@@ -53,6 +54,7 @@ func open(l log.Log, v types.Value) (output.Output, error) {
 }
 
 func (r *elasticsearch) Sender(e event.Event) error {
+    fmt.Println("MENGSHIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
     r.pipeline.Enqueue(e)
     return nil
 }

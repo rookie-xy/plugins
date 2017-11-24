@@ -45,7 +45,8 @@ func open(l log.Log, v types.Value) (pipeline.Queue, error) {
 func (c *channel) Clone() types.Object {
     return &channel{
         Log: c.Log,
-        channel: make(chan event.Event, c.size),
+        //channel: make(chan event.Event, c.size),
+        channel: c.channel,
         timer: time.NewTicker(c.duration),
     }
 }
@@ -106,7 +107,7 @@ func (c *channel) Requeue(e event.Event) error {
 }
 
 func (c *channel) Close() int {
-    if c.channel != nil {
+	if c.channel != nil {
         close(c.channel)
     }
 
