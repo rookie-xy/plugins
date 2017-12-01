@@ -12,6 +12,8 @@ import (
     "fmt"
     "github.com/rookie-xy/plugins/input/log/configure"
 	"github.com/rookie-xy/plugins/input/log/utils"
+  . "github.com/rookie-xy/hubble/log/level"
+	"github.com/rookie-xy/hubble/adapter"
 )
 
 // Log contains all log related data
@@ -22,7 +24,8 @@ type Log struct {
 
 	lastTimeRead   time.Time
     backoff        time.Duration
-	log            log.Log
+	log.Log
+	level          Level
 	done           chan struct{}
 }
 
@@ -30,7 +33,8 @@ type Log struct {
 func New(l log.Log, v types.Value) (input.Input, error) {
 	log := &Log{
 		lastTimeRead: time.Now(),
-		log:          l,
+		Log:          l,
+	    level:        adapter.ToLevelLog(l).Get(),
 		done:         make(chan struct{}),
 	}
 
@@ -49,7 +53,7 @@ func (l *Log) Clone() types.Object {
     	configure: l.configure,
     	lastTimeRead: time.Now(),
     	backoff: l.backoff,
-    	log: l.log,
+        Log: l.Log,
     	done: make(chan struct{}),
 	}
 }
@@ -66,6 +70,8 @@ func (l *Log) Init(src source.Source) error {
 
 	l.source = src
 	l.offset = offset
+
+	l.log(DEBUG, "input log init success")
 	return nil
 }
 
@@ -107,8 +113,7 @@ func (l *Log) Read(buf []byte) (int, error) {
 			return totalN, err
 		}
 
-		//logp.Debug("harvester", "End of file reached: %s; Backoff now.", f.fs.Name())
-		fmt.Printf("Collector End of file reached: %s; Backoff now.\n", l.source.Name())
+		l.log(DEBUG,"Collector End of file reached: %s; backoff now", l.source.Name())
 		l.wait()
 	}
 }
@@ -116,13 +121,13 @@ func (l *Log) Read(buf []byte) (int, error) {
 // errorChecks checks how the given error should be handled based on the config options
 func (l *Log) errorChecks(err error) error {
 	if err != io.EOF {
-		//logp.Err("Unexpected models reading from %s; error: %s", f.fs.Name(), err)
+		l.log(ERROR,"Unexpected models reading from %s; error: %s", l.source.Name(), err)
 		return err
 	}
 
 	// Stdin is not continuable
 	if !l.source.Continuable() {
-		//logp.Debug("harvester", "Source is not continuable: %s", f.fs.Name())
+        l.log(DEBUG,"harvester", "Source is not continuable: %s", l.source.Name())
 		return err
 	}
 
@@ -135,14 +140,14 @@ func (l *Log) errorChecks(err error) error {
 	// calling the stat function
 	info, statErr := l.source.Stat()
 	if statErr != nil {
-		//logp.Err("Unexpected error reading from %s; error: %s", f.fs.Name(), statErr)
+		l.log(ERROR,"Unexpected error reading from %s; error: %s", l.source.Name(), statErr)
 		return statErr
 	}
 
 	// check if file was truncated
 	if info.Size() < l.offset {
-		//logp.Debug("harvester",
-		//	"File was truncated as offset (%d) > size (%d): %s", f.offset, info.Size(), f.fs.Name())
+		l.log(DEBUG,"collector file was truncated as offset (%d) > size (%d): %s",
+			             l.offset, info.Size(), l.source.Name())
 		return source.ErrFileTruncate
 	}
 
@@ -154,7 +159,7 @@ func (l *Log) errorChecks(err error) error {
 
 	if l.configure.Renamed {
 		// Check if the file can still be found under the same path
-		if !utils.SameFile(l.source.Name(), info) {
+		if !utils.SameFile(l.source.Name(), info, l.log) {
 			return source.ErrRenamed
 		}
 	}
@@ -194,6 +199,10 @@ func (l *Log) Close() error {
 	close(l.done)
 	// Note: File reader is not closed here because that leads to race conditions
 	return nil
+}
+
+func (l *Log) log(ll Level, fmt string, args ...interface{}) {
+    log.Print(l.Log, l.level, ll, fmt, args...)
 }
 
 func init() {

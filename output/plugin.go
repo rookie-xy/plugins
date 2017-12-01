@@ -32,11 +32,10 @@ func init() {
         defer func() {
             if msg := recover(); msg != nil {
                 err = fmt.Errorf("%s", msg)
-	           }
+	        }
         }()
 
         register.Client(b.name, b.factory)
-
-        return
+        return nil
     })
 }

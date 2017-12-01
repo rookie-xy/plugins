@@ -90,7 +90,7 @@ func (c *channel) Dequeues(size int) ([]event.Event, error) {
 
             return events, nil
 
-        case <- c.timer.C:
+        case <-c.timer.C:
         	if count > 0 {
                 return events, pipeline.ErrEmpty
             }

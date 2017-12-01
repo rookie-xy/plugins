@@ -40,7 +40,6 @@ func init() {
         }()
 
         register.Client(b.name, b.factory)
-
-        return
+        return nil
     })
 }

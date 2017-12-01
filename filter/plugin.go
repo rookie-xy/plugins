@@ -34,6 +34,6 @@ func init() {
 
         register.Filter(b.name, b.factory)
 
-        return
+        return nil
     })
 }

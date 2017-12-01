@@ -40,6 +40,6 @@ func init() {
 
         register.Codec(b.name, b.factory)
 
-        return
+        return nil
     })
 }

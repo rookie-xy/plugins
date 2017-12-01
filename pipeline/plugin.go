@@ -37,6 +37,6 @@ func init() {
 
         register.Pipeline(b.name, b.factory)
 
-        return
+        return nil
     })
 }

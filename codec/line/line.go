@@ -2,22 +2,28 @@ package line
 
 import (
     "bytes"
+    "errors"
+
     "github.com/rookie-xy/hubble/types"
     "github.com/rookie-xy/hubble/log"
     "github.com/rookie-xy/hubble/codec"
     "github.com/rookie-xy/hubble/register"
-    "fmt"
+  . "github.com/rookie-xy/hubble/log/level"
+    "github.com/rookie-xy/hubble/adapter"
 )
 
 type Line struct {
-    log    log.Log
+    log.Log
+    level  Level
+
     limit  int
     match  byte
 }
 
-func New(l log.Log, v types.Value) (codec.Codec, error) {
+func New(log log.Log, v types.Value) (codec.Codec, error) {
     line := &Line{
-        log:    l,
+        Log:   log,
+        level: adapter.ToLevelLog(log).Get(),
         limit: -1,
         match: '\n',
     }
@@ -26,13 +32,13 @@ func New(l log.Log, v types.Value) (codec.Codec, error) {
 		if match, ok := val["match"]; ok {
             line.match = []byte(match.(string))[0]
         } else {
-            fmt.Println("match is not found")
+            return nil, errors.New("match is not found")
         }
 
         if max, ok := val["max"]; ok {
             line.limit = max.(int)
         } else {
-            fmt.Println("max is not found")
+            return nil, errors.New("max is not found")
         }
     }
 
@@ -41,7 +47,7 @@ func New(l log.Log, v types.Value) (codec.Codec, error) {
 
 func (l *Line) Clone() types.Object {
     return &Line{
-        log: l.log,
+        Log:   l.Log,
         limit: l.limit,
         match: l.match,
     }
@@ -65,7 +71,7 @@ func (l *Line) Decode(data []byte, atEOF bool) (int, []byte, error) {
     if i := bytes.IndexByte(data, l.match); i >= 0 {
         // Out of bounds, throw out the line data
         if i > l.limit {
-            fmt.Println("Out of bounds, throw out the line data")
+            l.log(WARN,"Out of bounds, throw out the line data")
             return i + 1, nil, nil
         }
 
@@ -78,8 +84,12 @@ func (l *Line) Decode(data []byte, atEOF bool) (int, []byte, error) {
         return len(data), dropCR(data), nil
     }
 
-    // Request more data.
+    l.log(DEBUG, Name +"; request more data")
     return 0, nil, nil
+}
+
+func (l *Line) log(ll Level, fmt string, args ...interface{}) {
+    log.Print(l.Log, l.level, ll, fmt, args...)
 }
 
 func init() {

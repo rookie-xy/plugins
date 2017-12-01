@@ -53,8 +53,7 @@ func open(l log.Log, v types.Value) (output.Output, error) {
 }
 
 func (k *kafka) Sender(e event.Event) error {
-    k.pipeline.Enqueue(e)
-    return nil
+    return k.pipeline.Enqueue(e)
 }
 
 func (k *kafka) Close() {

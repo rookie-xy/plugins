@@ -1,5 +1,5 @@
 package batch
-
+/*
 import (
 	"github.com/rookie-xy/hubble/types"
 	"github.com/rookie-xy/hubble/log"
@@ -44,3 +44,4 @@ func (b *Batch) Init(v types.Value) error {
     b.duration = duration
 	return nil
 }
+*/

@@ -1,13 +1,9 @@
 package utils
 
-import (
-	"os"
-	"fmt"
-)
+import "os"
 
 func Rotate(path, temp string) error {
     if e := os.Rename(temp, path); e != nil {
-        fmt.Printf("Rotate error: %s", e)
         return e
     }
 

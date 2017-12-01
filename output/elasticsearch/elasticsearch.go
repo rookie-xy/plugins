@@ -53,8 +53,7 @@ func open(l log.Log, v types.Value) (output.Output, error) {
 }
 
 func (r *elasticsearch) Sender(e event.Event) error {
-    r.pipeline.Enqueue(e)
-    return nil
+    return r.pipeline.Enqueue(e)
 }
 
 func (r *elasticsearch) Close() {

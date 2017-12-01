@@ -1,8 +1,6 @@
 package sinceDB
 
 import (
-    "fmt"
-
     "github.com/rookie-xy/hubble/log"
     "github.com/rookie-xy/hubble/types"
     "github.com/rookie-xy/hubble/event"
@@ -13,33 +11,37 @@ import (
     "github.com/rookie-xy/plugins/client/sinceDB/states"
     "github.com/rookie-xy/hubble/models/file"
     "github.com/rookie-xy/hubble/adapter"
+    "errors"
+  . "github.com/rookie-xy/hubble/log/level"
 )
 
 type sinceDB struct {
-    log      log.Log
+    log.Log
+    level    Level
 
     path     string
     states  *file.States
 }
 
-func open(l log.Log, v types.Value) (proxy.Forward, error) {
+func open(log log.Log, v types.Value) (proxy.Forward, error) {
     sinceDB := &sinceDB{
-        log: l,
+        Log: log,
+        level: adapter.ToLevelLog(log).Get(),
         states: file.News(),
     }
 
     if v == nil {
-        return nil, fmt.Errorf("Error value is nil")
+        return nil, errors.New("error value is nil")
     }
 
-    if path, err := path.Init(v, sinceDB.states); err != nil {
+    if path, err := path.Init(v, sinceDB.states, sinceDB.log); err != nil {
         return nil, err
 
     } else {
     	sinceDB.path = path
 
-        if states, err := states.Load(path); err != nil {
-            return nil, fmt.Errorf("Error loading states: %v", err)
+        if states, err := states.Load(path, sinceDB.log); err != nil {
+            return nil, err
 	    } else {
 	        sinceDB.states.Set(states)
         }
@@ -52,10 +54,9 @@ func (s *sinceDB) Sender(e event.Event) error {
 	fileEvent := adapter.ToFileEvent(e)
     s.states.Update(fileEvent.GetFooter())
 
-    if err := dump.File(s.path, s.states); err != nil {
+    if err := dump.File(s.path, s.states, s.log); err != nil {
         return err
     }
-
     return nil
 }
 
@@ -67,10 +68,9 @@ func (s *sinceDB) Senders(events []event.Event) error {
         }
     }
 
-    if err := dump.File(s.path, s.states); err != nil {
+    if err := dump.File(s.path, s.states, s.log); err != nil {
         return err
     }
-
     return nil
 }
 
@@ -78,7 +78,12 @@ func (s *sinceDB) Load() []file.State {
     return s.states.States
 }
 
+
 func (s *sinceDB) Close() {
+}
+
+func (s *sinceDB) log(l Level, fmt string, args ...interface{}) {
+    log.Print(s.Log, s.level, l, fmt, args...)
 }
 
 func init() {

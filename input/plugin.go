@@ -33,6 +33,6 @@ func init() {
         }()
 
         register.Input(b.name, b.factory)
-        return
+        return nil
     })
 }

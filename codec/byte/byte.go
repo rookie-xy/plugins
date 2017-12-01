@@ -8,10 +8,10 @@ import (
 )
 
 type Byte struct {
-    log    log.Log
+    log  log.Log
 }
 
-func New(l log.Log, v types.Value) (codec.Codec, error) {
+func New(l log.Log, _ types.Value) (codec.Codec, error) {
     return &Byte{
         log: l,
     }, nil
@@ -21,7 +21,7 @@ func (b *Byte) Encode(in types.Object) (types.Object, error) {
     return nil, nil
 }
 
-// ScanBytes is a split function for a Scanner that returns each byte as a token.
+// Byte is a split function for a Scanner that returns each byte as a token.
 func (b *Byte) Decode(data []byte, atEOF bool) (int, []byte, error) {
     if atEOF && len(data) == 0 {
         return 0, nil, nil
