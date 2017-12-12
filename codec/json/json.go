@@ -4,56 +4,48 @@ import (
     "bytes"
     "encoding/json"
 
-    "github.com/urso/go-structform/gotype"
-
-
     "github.com/rookie-xy/hubble/log"
     "github.com/rookie-xy/hubble/types"
     "github.com/rookie-xy/hubble/codec"
 
 	"github.com/rookie-xy/hubble/register"
+	"github.com/mitchellh/mapstructure"
+	"github.com/rookie-xy/hubble/adapter"
+	"github.com/rookie-xy/hubble/event"
 )
 
 type Json struct {
     log.Log
 
-    name     string
 	buffer   bytes.Buffer
-	folder  *gotype.Iterator
-	pretty   bool
+	Pretty   bool
 }
 
 func New(l log.Log, v types.Value) (codec.Codec, error) {
+    j := &Json{
+    	Log: l,
+    	Pretty: false,
+    }
 
-    j := &Json{pretty: false}
-	if err := reset(j.buffer, j.folder); err != nil {
-		panic(err)
-	}
+    if err := mapstructure.Decode(v.GetMap(), j); err != nil {
+        return nil, err
+    }
 
-    return &Json{
-        Log: l,
-    }, nil
+    return j, nil
 }
 
-func (j *Json) Encode(in types.Object) (types.Object, error) {
-    j.buffer.Reset()
-
-	err := j.folder.Fold(makeEvent(index, e.version, event))
-	if err != nil {
-		if err := reset(j.buffer, j.folder); err != nil {
-			return nil, err
-		}
-
-		return nil, err
+func (j *Json) Encode(in types.Object) ([]byte, error) {
+    data, err := json.Marshal(adapter.ToFileEvent(in.(event.Event)))
+    if err != nil {
+    	return nil, err
 	}
 
-	data := j.buffer.Bytes()
-	if !j.pretty {
+	if !j.Pretty {
 		return data, nil
 	}
 
 	var buffer bytes.Buffer
-	if err = json.Indent(&buffer, data, "", "  "); err != nil {
+	if err := json.Indent(&buffer, data, "", "  "); err != nil {
 		return nil, err
 	}
 

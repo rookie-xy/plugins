@@ -10,8 +10,6 @@ import (
   _ "github.com/rookie-xy/plugins/codec/yaml"
   _ "github.com/rookie-xy/plugins/codec/json"
   _ "github.com/rookie-xy/plugins/codec/byte"
-  _ "github.com/rookie-xy/plugins/codec/word"
-  _ "github.com/rookie-xy/plugins/codec/rune"
   _ "github.com/rookie-xy/plugins/codec/line"
   _ "github.com/rookie-xy/plugins/codec/multiline"
 )

@@ -20,7 +20,7 @@ func New(l log.Log, v types.Value) (codec.Codec, error) {
     }, nil
 }
 
-func (r *Yaml) Encode(in types.Object) (types.Object, error) {
+func (r *Yaml) Encode(in types.Object) ([]byte, error) {
     out, error := yaml.Marshal(in)
     if error != nil {
         return nil, error

@@ -53,7 +53,7 @@ func (l *Line) Clone() types.Object {
     }
 }
 
-func (l *Line) Encode(in types.Object) (types.Object, error) {
+func (l *Line) Encode(in types.Object) ([]byte, error) {
     return nil, nil
 }
 

@@ -1,9 +1,9 @@
 package console
 
 import (
-    "fmt"
-    "bufio"
+	"fmt"
     "os"
+    "bufio"
 
 	"github.com/mitchellh/mapstructure"
 
@@ -11,9 +11,11 @@ import (
     "github.com/rookie-xy/hubble/types"
     "github.com/rookie-xy/hubble/proxy"
     "github.com/rookie-xy/hubble/event"
-    "github.com/rookie-xy/hubble/adapter"
     "github.com/rookie-xy/hubble/register"
 	"github.com/rookie-xy/hubble/codec"
+	"github.com/rookie-xy/hubble/plugin"
+	"github.com/rookie-xy/hubble/factory"
+	"github.com/rookie-xy/hubble/types/value"
 )
 
 type console struct {
@@ -22,21 +24,38 @@ type console struct {
     out      *os.File
  	writer   *bufio.Writer
  	Bufsize   int
- 	End       byte
+ 	Split     string
+
+ 	end       byte
  	codec     codec.Codec
 }
 
-func open(l log.Log, v types.Value) (proxy.Forward, error) {
+func open(log log.Log, v types.Value) (proxy.Forward, error) {
     console := &console{
-        Log: l,
+        Log: log,
         out: os.Stdout,
         Bufsize: 8*512,
-        End: '\n',
+        end: '\n',
     }
 
     if values := v.GetMap(); values != nil {
         if err := mapstructure.Decode(values, console); err != nil {
     		return nil, err
+		}
+
+		if len(console.Split) > 0 {
+			console.end = []byte(console.Split)[0]
+		}
+
+		for k, v := range values {
+			if key, ok := plugin.Check(codec.Name, k.(string)); ok {
+				if name, ok := plugin.Name(key); ok {
+					var err error
+					if console.codec, err = factory.Codec(name, log, value.New(v)); err != nil {
+						return nil, err
+					}
+				}
+			}
 		}
 	}
 
@@ -45,23 +64,14 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
 }
 
 func (c *console) Sender(e event.Event) error {
-    fileEvent := adapter.ToFileEvent(e)
-    //state := fileEvent.GetFooter()
-    //adapter.ToFileEvent(e)
-    //body := adapter.ToFileEvent(e).GetBody()
-    //fmt.Printf("consoleeeeeeeeeeeeeeeeeeeeeeeeeeee: %d#%s\n ", state.Offset, string(body.GetContent()))
-   	serializedEvent, err := c.codec.Encode(fileEvent)
+   	serializedEvent, err := c.codec.Encode(e)
    	if err != nil {
    		return err
 	}
 
-	if err := c.writeBuffer(serializedEvent); err != nil {
-		//logp.Critical("Unable to publish events to console: %v", err)
-		return err
-	}
+	fmt.Println("aaaaaaaaaaaaaaaaaaaaaaaaa")
 
-	if err := c.writeBuffer(c.End); err != nil {
-		//logp.Critical("Error when appending newline to event: %v", err)
+    if err := flush(c.writer, serializedEvent, c.end); err != nil {
 		return err
 	}
 
@@ -71,19 +81,12 @@ func (c *console) Sender(e event.Event) error {
 func (c *console) Close() {
 }
 
-func (c *console) writeBuffer(buf []byte) error {
-	written := 0
-	for written < len(buf) {
-		n, err := c.writer.Write(buf[written:])
-		if err != nil {
-			return err
-		}
-
-		written += n
-	}
-	return nil
-}
-
 func init() {
     register.Client(Namespace, open)
 }
+
+    //fileEvent := adapter.ToFileEvent(e)
+    //state := fileEvent.GetFooter()
+    //adapter.ToFileEvent(e)
+    //body := adapter.ToFileEvent(e).GetBody()
+    //fmt.Printf("consoleeeeeeeeeeeeeeeeeeeeeeeeeeee: %d#%s\n ", state.Offset, string(body.GetContent()))

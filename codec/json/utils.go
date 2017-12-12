@@ -10,13 +10,7 @@ func reset(buffer bytes.Buffer, folder *gotype.Iterator) error {
 	visitor := json.NewVisitor(&buffer)
 
 	var err error
-	folder, err = gotype.NewIterator(visitor,
-		gotype.Folders(
-			codec.MakeTimestampJson(),
-			codec.MakeBCTimestampJson(),
-		),
-	)
-
+	folder, err = gotype.NewIterator(visitor, gotype.Folders(nil))
 	if err != nil {
 		return err
 	}

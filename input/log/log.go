@@ -9,7 +9,6 @@ import (
 	"github.com/rookie-xy/hubble/source"
 	"github.com/rookie-xy/hubble/register"
    "github.com/rookie-xy/hubble/input"
-    "fmt"
     "github.com/rookie-xy/plugins/input/log/configure"
 	"github.com/rookie-xy/plugins/input/log/utils"
   . "github.com/rookie-xy/hubble/log/level"

@@ -23,7 +23,7 @@ func New(l log.Log, v types.Value) (codec.Codec, error) {
     }, nil
 }
 
-func (m *Multiline) Encode(in types.Object) (types.Object, error) {
+func (m *Multiline) Encode(in types.Object) ([]byte, error) {
     return nil, nil
 }
 

@@ -17,7 +17,7 @@ func New(l log.Log, _ types.Value) (codec.Codec, error) {
     }, nil
 }
 
-func (b *Byte) Encode(in types.Object) (types.Object, error) {
+func (b *Byte) Encode(in types.Object) ([]byte, error) {
     return nil, nil
 }
 

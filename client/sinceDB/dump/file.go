@@ -1,7 +1,6 @@
 package dump
 
 import (
-	"fmt"
 	"os"
 	"encoding/json"
 
