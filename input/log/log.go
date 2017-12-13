@@ -53,6 +53,7 @@ func (l *Log) Clone() types.Object {
     	lastTimeRead: time.Now(),
     	backoff: l.backoff,
         Log: l.Log,
+        level: l.level,
     	done: make(chan struct{}),
 	}
 }

@@ -8,10 +8,13 @@ import (
     "github.com/rookie-xy/hubble/types"
     "github.com/rookie-xy/hubble/adapter"
     "fmt"
+    "github.com/rookie-xy/plugins/client/elasticsearch/client"
 )
 
 type elasticsearch struct {
     log.Log
+
+    client client.Client
 }
 
 func open(l log.Log, v types.Value) (proxy.Forward, error) {

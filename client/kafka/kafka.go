@@ -20,7 +20,7 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
     }, nil
 }
 
-func (e *kafka) Sender(event event.Event) error {
+func (k *kafka) Sender(event event.Event) error {
     fileEvent := adapter.ToFileEvent(event)
     state := fileEvent.GetFooter()
     body := adapter.ToFileEvent(event).GetBody()
@@ -28,7 +28,7 @@ func (e *kafka) Sender(event event.Event) error {
     return nil
 }
 
-func (e *kafka) Close() {
+func (k *kafka) Close() {
 }
 
 func init() {

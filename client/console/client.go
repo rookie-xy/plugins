@@ -2,7 +2,7 @@ package console
 
 import "bufio"
 
-func flush(writer *bufio.Writer, buffer []byte, end byte) error {
+func client(writer *bufio.Writer, buffer []byte, end byte) error {
 	written := 0
 	for written < len(buffer) {
 		n, err := writer.Write(buffer[written:])

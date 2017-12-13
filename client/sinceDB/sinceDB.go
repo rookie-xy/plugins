@@ -27,8 +27,8 @@ func open(log log.Log, v types.Value) (proxy.Forward, error) {
     sinceDB := &sinceDB{
         Log: log,
         level: adapter.ToLevelLog(log).Get(),
-        states: file.News(),
     }
+    sinceDB.states = file.News(sinceDB.log)
 
     if v == nil {
         return nil, errors.New("error value is nil")
@@ -77,7 +77,6 @@ func (s *sinceDB) Senders(events []event.Event) error {
 func (s *sinceDB) Load() []file.State {
     return s.states.States
 }
-
 
 func (s *sinceDB) Close() {
 }

@@ -1,7 +1,6 @@
 package console
 
 import (
-	"fmt"
     "os"
     "bufio"
 
@@ -69,12 +68,9 @@ func (c *console) Sender(e event.Event) error {
    		return err
 	}
 
-	fmt.Println("aaaaaaaaaaaaaaaaaaaaaaaaa")
-
-    if err := flush(c.writer, serializedEvent, c.end); err != nil {
+    if err := client(c.writer, serializedEvent, c.end); err != nil {
 		return err
 	}
-
     return nil
 }
 

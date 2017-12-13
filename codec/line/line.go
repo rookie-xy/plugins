@@ -20,7 +20,7 @@ type Line struct {
     match  byte
 }
 
-func New(log log.Log, v types.Value) (codec.Codec, error) {
+func New(log log.Log, v types.Value) (codec.Decoder, error) {
     line := &Line{
         Log:   log,
         level: adapter.ToLevelLog(log).Get(),
@@ -53,7 +53,7 @@ func (l *Line) Clone() types.Object {
     }
 }
 
-func (l *Line) Encode(in types.Object) ([]byte, error) {
+func (l *Line) Decode(in []byte) (types.Object, error) {
     return nil, nil
 }
 
@@ -63,7 +63,7 @@ func (l *Line) Encode(in types.Object) ([]byte, error) {
 // by one mandatory newline. In regular expression notation, it is `\r?\n`.
 // The last non-empty line of configure will be returned even if it has no
 // newline.
-func (l *Line) Decode(data []byte, atEOF bool) (int, []byte, error) {
+func (l *Line) LogDecode(data []byte, atEOF bool) (int, []byte, error) {
     if atEOF && len(data) == 0 {
         return 0, nil, nil
     }
@@ -93,5 +93,5 @@ func (l *Line) log(ll Level, fmt string, args ...interface{}) {
 }
 
 func init() {
-    register.Codec(Namespace, New)
+    register.Decoder(Namespace, New)
 }

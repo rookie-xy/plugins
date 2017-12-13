@@ -29,8 +29,17 @@ func (r *Yaml) Encode(in types.Object) ([]byte, error) {
     return out, nil
 }
 
+func (r *Yaml) Decode(in []byte) (types.Object, error) {
+    var data interface{}
+    if err := yaml.Unmarshal(in, &data); err != nil {
+        return nil, err
+    }
+
+    return data, nil
+}
+
+/*
 func (r *Yaml) Decode(in []byte, atEOF bool) (int, []byte, error) {
-    /*
     var out interface{}
 
     if e := yaml.Unmarshal(in, &out); e != nil {
@@ -38,11 +47,11 @@ func (r *Yaml) Decode(in []byte, atEOF bool) (int, []byte, error) {
     }
 
     return 0, out.([]byte), nil
-    */
 
     return 0, nil, nil
 }
-
+*/
+/*
 func (r *Yaml) ValueDecode(in []byte, atEOF bool) (int, types.Object, error) {
     var out interface{}
 
@@ -52,6 +61,7 @@ func (r *Yaml) ValueDecode(in []byte, atEOF bool) (int, types.Object, error) {
 
     return 0, out, nil
 }
+*/
 
 func init() {
     register.Codec(Namespace, New)

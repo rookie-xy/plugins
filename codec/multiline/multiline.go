@@ -17,13 +17,13 @@ type Multiline struct {
     line     *line
 }
 
-func New(l log.Log, v types.Value) (codec.Codec, error) {
+func New(l log.Log, v types.Value) (codec.Decoder, error) {
     return &Multiline{
         log: l,
     }, nil
 }
 
-func (m *Multiline) Encode(in types.Object) ([]byte, error) {
+func (m *Multiline) Decode(_ []byte) (types.Object, error) {
     return nil, nil
 }
 
@@ -33,7 +33,7 @@ func (m *Multiline) Encode(in types.Object) ([]byte, error) {
 // by one mandatory newline. In regular expression notation, it is `\r?\n`.
 // The last non-empty line of configure will be returned even if it has no
 // newline.
-func (m *Multiline) Decode(data []byte, atEOF bool) (int, []byte, error) {
+func (m *Multiline) LogDecode(data []byte, atEOF bool) (int, []byte, error) {
     if atEOF && len(data) == 0 {
         return 0, nil, nil
     }
@@ -68,5 +68,5 @@ func (m *Multiline) Decode(data []byte, atEOF bool) (int, []byte, error) {
 }
 
 func init() {
-    register.Codec(Namespace, New)
+    register.Decoder(Namespace, New)
 }

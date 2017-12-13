@@ -35,7 +35,10 @@ func New(l log.Log, v types.Value) (codec.Codec, error) {
 }
 
 func (j *Json) Encode(in types.Object) ([]byte, error) {
-    data, err := json.Marshal(adapter.ToFileEvent(in.(event.Event)))
+	fileEvent := adapter.ToFileEvent(in.(event.Event))
+    //header := fileEvent.GetHeader()
+
+    data, err := json.Marshal(fileEvent.GetBody())
     if err != nil {
     	return nil, err
 	}
@@ -52,8 +55,8 @@ func (j *Json) Encode(in types.Object) ([]byte, error) {
 	return buffer.Bytes(), nil
 }
 
-func (j *Json) Decode(in []byte, atEOF bool) (int, []byte, error) {
-    return 0, nil, nil
+func (j *Json) Decode(in []byte) (types.Object, error) {
+    return nil, nil
 }
 
 func init() {
