@@ -11,6 +11,7 @@ import (
     "github.com/rookie-xy/hubble/output"
     "github.com/rookie-xy/hubble/plugin"
     "github.com/rookie-xy/hubble/models/file"
+    "errors"
 )
 
 type sinceDB struct {
@@ -30,13 +31,24 @@ func open(l log.Log, v types.Value) (output.Output, error) {
     }
 
     // Open the sinceDB client and get the file models
-    if sinceDb, err := factory.Forward(plugin.Flag + "." + v.GetString()); err != nil {
-        return nil, err
+    if key, ok := plugin.Name(v.GetString()); ok {
+        if sinceDb, err := factory.Forward(key); err != nil {
+            return nil, err
+        } else {
+            sinceDB.SinceDB = adapter.FileSinceDB(sinceDb)
+        }
     } else {
-        sinceDB.SinceDB = adapter.FileSinceDB(sinceDb)
+        return nil, errors.New("plugin name error")
     }
-
     return sinceDB, nil
+}
+
+func (s *sinceDB) Clone() types.Object {
+    return &sinceDB{
+        SinceDB: s.SinceDB,
+        log: s.log,
+        pipeline: s.pipeline,
+    }
 }
 
 func (s *sinceDB) Sender(e event.Event) error {

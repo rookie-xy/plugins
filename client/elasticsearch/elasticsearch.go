@@ -23,6 +23,12 @@ func open(l log.Log, v types.Value) (proxy.Forward, error) {
     }, nil
 }
 
+func (e *elasticsearch) Clone() types.Object {
+    return &elasticsearch{
+        Log: e.Log,
+    }
+}
+
 func (e *elasticsearch) Sender(event event.Event) error {
     fileEvent := adapter.ToFileEvent(event)
     state := fileEvent.GetFooter()

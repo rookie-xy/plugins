@@ -46,9 +46,18 @@ func open(log log.Log, v types.Value) (proxy.Forward, error) {
 	        sinceDB.states.Set(states)
         }
     }
-
     return sinceDB, nil
 }
+/*
+func (s *sinceDB) Clone() types.Object {
+    return &sinceDB{
+        Log:    s.Log,
+        level:  s.level,
+        path:   s.path,
+        states: s.states,
+    }
+}
+*/
 
 func (s *sinceDB) Sender(e event.Event) error {
 	fileEvent := adapter.ToFileEvent(e)

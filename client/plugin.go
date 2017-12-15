@@ -13,7 +13,7 @@ import (
   _ "github.com/rookie-xy/plugins/client/kafka"
   _ "github.com/rookie-xy/plugins/client/sinceDB"
   _ "github.com/rookie-xy/plugins/client/console"
-  _ "github.com/rookie-xy/plugins/client/logstash"
+  //_ "github.com/rookie-xy/plugins/client/logstash"
   _ "github.com/rookie-xy/plugins/client/elasticsearch"
 )
 
