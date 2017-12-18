@@ -62,6 +62,17 @@ func open(log log.Log, v types.Value) (proxy.Forward, error) {
     return console, nil
 }
 
+func (c *console) Clone() types.Object {
+    return &console{
+        Log: c.Log,
+        out: os.Stdout,
+        Bufsize: c.Bufsize,
+        end: c.end,
+        // 有并发问题吗
+        codec: c.codec,
+    }
+}
+
 func (c *console) Sender(e event.Event) error {
    	serializedEvent, err := c.codec.Encode(e)
    	if err != nil {
