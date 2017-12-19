@@ -12,44 +12,58 @@ import (
     "github.com/rookie-xy/hubble/output"
     "github.com/rookie-xy/hubble/plugin"
     "github.com/rookie-xy/hubble/adapter"
+    "github.com/rookie-xy/hubble/proxy"
 )
 
 type kafka struct {
     log       log.Log
     pipeline  pipeline.Queue
+    value     types.Value
+    domain    string
 }
 
-func open(l log.Log, v types.Value) (output.Output, error) {
-    kafka := &kafka{
-        log: l,
-    }
-
-    pluginName := plugin.Flag + "." + pipeline.Name + "." + pipeline.Plugin
-
-    if value := v.GetMap(); value != nil {
-        for key, _ := range value {
-            key := key.(string)
-            if n := strings.Index(key, "."); n > -1 {
-                if key[0:n] == pipeline.Name {
-                    pluginName = plugin.Flag + "." + key
+func Kafka(l log.Log, v types.Value) (output.Output, error) {
+    domain, ok := plugin.Domain(pipeline.Name, pipeline.Plugin)
+    if ok {
+        if value := v.GetMap(); value != nil {
+            for key, _ := range value {
+                key := key.(string)
+                if n := strings.Index(key, "."); n > -1 {
+                    if key[0:n] == pipeline.Name {
+                        domain, _ = plugin.Name(key)
+                    }
                 }
             }
         }
     }
 
-    if pipeline, err := factory.Pipeline(pluginName, l, v); err != nil {
-        return nil, err
+    kafka := &kafka{
+        log:    l,
+        value:  v,
+        domain: domain,
+    }
+
+    return kafka, nil
+}
+
+func (k *kafka) New() proxy.Forward {
+    kafka := &kafka{
+    	log: k.log,
+    }
+
+    if pipeline, err := factory.Pipeline(k.domain, k.log, k.value); err != nil {
+        return nil
     } else {
         kafka.pipeline = pipeline
     }
 
     if queue := factory.Queue(Name); queue != nil {
         if err := queue.Enqueue(adapter.Pipeline2Event(kafka.pipeline)); err != nil {
-            return nil, err
+            return nil
         }
     }
 
-    return kafka, nil
+    return kafka
 }
 
 func (k *kafka) Sender(e event.Event) error {
@@ -61,5 +75,5 @@ func (k *kafka) Close() {
 }
 
 func init() {
-    register.Output(Namespace, open)
+    register.Output(Namespace, Kafka)
 }

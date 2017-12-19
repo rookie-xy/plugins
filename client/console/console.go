@@ -15,6 +15,7 @@ import (
 	"github.com/rookie-xy/hubble/plugin"
 	"github.com/rookie-xy/hubble/factory"
 	"github.com/rookie-xy/hubble/types/value"
+	"github.com/rookie-xy/hubble/prototype"
 )
 
 type console struct {
@@ -65,11 +66,11 @@ func open(log log.Log, v types.Value) (proxy.Forward, error) {
 func (c *console) Clone() types.Object {
     return &console{
         Log: c.Log,
-        out: os.Stdout,
-        Bufsize: c.Bufsize,
+        //out: os.Stdout,
+        //Bufsize: c.Bufsize,
+        writer: bufio.NewWriterSize(c.out, c.Bufsize),
         end: c.end,
-        // 有并发问题吗
-        codec: c.codec,
+        codec: prototype.Codec(c.codec),
     }
 }
 

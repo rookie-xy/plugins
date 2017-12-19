@@ -12,6 +12,7 @@ import (
     "github.com/rookie-xy/hubble/plugin"
     "github.com/rookie-xy/hubble/models/file"
     "errors"
+    "github.com/rookie-xy/hubble/proxy"
 )
 
 type sinceDB struct {
@@ -20,7 +21,7 @@ type sinceDB struct {
     pipeline  pipeline.Queue
 }
 
-func open(l log.Log, v types.Value) (output.Output, error) {
+func SinceDB(l log.Log, v types.Value) (output.Output, error) {
     sinceDB := &sinceDB{
         log: l,
     }
@@ -43,12 +44,12 @@ func open(l log.Log, v types.Value) (output.Output, error) {
     return sinceDB, nil
 }
 
-func (s *sinceDB) Clone() types.Object {
+func (s *sinceDB) New() (proxy.Forward, error) {
     return &sinceDB{
-        SinceDB: s.SinceDB,
-        log: s.log,
+        log:      s.log,
+        SinceDB:  s.SinceDB,
         pipeline: s.pipeline,
-    }
+    }, nil
 }
 
 func (s *sinceDB) Sender(e event.Event) error {
@@ -64,5 +65,5 @@ func (s *sinceDB) Close() {
 }
 
 func init() {
-    register.Output(Namespace, open)
+    register.Output(Namespace, SinceDB)
 }

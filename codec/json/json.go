@@ -16,8 +16,6 @@ import (
 
 type Json struct {
     log.Log
-
-	buffer   bytes.Buffer
 	Pretty   bool
 }
 
@@ -57,6 +55,13 @@ func (j *Json) Encode(in types.Object) ([]byte, error) {
 
 func (j *Json) Decode(in []byte) (types.Object, error) {
     return nil, nil
+}
+
+func (j *Json) Clone() types.Object {
+    return &Json{
+        Log:    j.Log,
+        Pretty: j.Pretty,
+    }
 }
 
 func init() {

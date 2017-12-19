@@ -19,6 +19,7 @@ type channel struct {
 
     size       int
     channel    chan event.Event
+    refer      int
 }
 
 func open(l log.Log, v types.Value) (pipeline.Queue, error) {
